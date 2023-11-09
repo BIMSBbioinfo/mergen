@@ -1,0 +1,42 @@
+
+#' setup the online large language model (LLM) API for subsequent tasks
+#'
+#'
+#'
+#' @example
+#' agent=setupopenaiAgent(model="text-davinci-003",type="completion", openai_api_key="")
+#' @export
+setupopenaiAgent<-function(model,type=c("chat","completion"),
+                           openai_api_key= Sys.getenv("OPENAI_API_KEY"),
+                           openai_organization = NULL
+                           ){
+  chatModels= strsplit("gpt-4, gpt-4-0314, gpt-4-32k, gpt-4-32k-0314, gpt-3.5-turbo, gpt-3.5-turbo-0301",", ")[[1]]
+  completionModels=strsplit("text-davinci-003, text-davinci-002, text-curie-001, text-babbage-001, text-ada-001",", ")[[1]]
+
+  if(type=="chat" && (! model %in% chatModels) ){
+    warning("provided model \'",model,"\' is not one of the provided models from openai\n","check openAI API for current models that can be used for chat")
+  }else if(type=="completion" && (! model %in% completionModels) ){
+    warning("provided model \'",model,"'\ is not one of the provided models from openai\n","check openAI API for current models that can be used for completion")
+  }
+
+  return(list(name="openai",model=model,type=type,
+              openai_api_key=openai_api_key,
+              openai_api_key=openai_organization))
+}
+
+
+#' setup any online  large language model (LLM) API for subsequent tasks
+#' parameters of the agent
+#' How does it return the text? or errors, think about this
+#' @noRd
+setupAgent<-function(agentName="forefront.ai",parameters){
+
+}
+
+
+#' setup a test agent to be used for test prompting
+#' should return a random set of responses
+setupTestAgent<-function(agentName="testAgent"){
+
+  return(list(name="testAgent",model="crap",type="completion"))
+}

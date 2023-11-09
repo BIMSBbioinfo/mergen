@@ -1,0 +1,26 @@
+Package: mergen
+Type: Package
+Title: mergen: AI-Driven Code Generation, Explanation and Execution for Data Analysis
+Version: 0.1.0
+Authors@R: 
+    person("Altuna", "Akalin", email= "aakalin@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-0468-0117"))
+Description: mergen employs artificial intelligence to convert data analysis questions into executable code, explanations, and algorithms. The self-correction feature ensures the generated code is optimized for performance and accuracy. mergen features a user-friendly chat interface, enabling users to interact with the AI agent and extract valuable insights from their data effortlessly.
+License: MIT license
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 3.5.0),
+Imports:
+    data.table (>= 1.9.6),
+    openai
+Suggests: 
+    knitr
+VignetteBuilder: knitr
+Collate:
+    'setupAgent.R'
+    'parseBotResponse.R'
+    'sendPrompt.R'
+    'executeCode.R'
+    'selfcorrect.R'
+RoxygenNote: 7.2.3
