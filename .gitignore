@@ -4,3 +4,6 @@
 .Ruserdata
 .Renviron
 .DS_Store
+.Rdata
+.httr-oauth
+.quarto
