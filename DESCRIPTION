@@ -13,7 +13,8 @@ Depends:
     R (>= 3.5.0),
 Imports:
     data.table (>= 1.9.6),
-    openai
+    openai,
+    rmarkdown
 Suggests: 
     knitr
 VignetteBuilder: knitr
