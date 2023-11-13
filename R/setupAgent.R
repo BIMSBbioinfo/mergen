@@ -3,8 +3,8 @@
 #' This function is used for the
 #' setup of the online large language model (LLM) API for subsequent tasks
 #'
-#' @param model Specifies LLM to be used
-#' @param type Specifies type of model (chat or completion)
+#' @param model Specify LLM to be used
+#' @param type Specify type of model (chat or completion)
 #' @param openai_api_key openAI API key
 #' @param openai_organization openAI organization
 #'
