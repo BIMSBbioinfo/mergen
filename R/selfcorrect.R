@@ -23,15 +23,43 @@
 #' response <- selfcorrect(agent,prompt,context=rbionfoExp, max_tokens = 500)
 #' }
 #' @export
-selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,...){
+selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NULL,...){
 
   # send prompt
-  response <- sendPrompt(agent,prompt,context=rbionfoExp,return.type="text",...)
+  response <- sendPrompt(agent,prompt,context,return.type="text",...)
+
+  # clean the code backtick structure and install.packages calls
+  response<-clean_code_blocks(response)
+
   initial.response <- response
 
+
   # parse the code
-  blocks <- extractCode(text=response,delimiter="```")
+  blocks <- extractCode(text=initial.response,delimiter="```")
   initial.blocks <- blocks
+
+  # extract and install packages if needed
+  extractInstallPkg(blocks$code)
+
+
+  # list of messages to the bot
+  msgs<- list(
+    list(
+      "role" = "user",
+      "content" = paste(context,"\n",prompt)
+    ),
+    list(
+      "role"="assistant",
+      "content"=initial.response
+    )
+  )
+
+
+  # check if any code is returned
+  if(blocks$code==""){
+    stop("no code returned")
+
+  }
 
   # Define the prompt template to inject the error message
   promptTemplate <- "The previous code returned the following errors and/or warnings,\n <error> \n return fixed code in one block, delimited in triple backticks"
@@ -42,40 +70,56 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,...){
   # execute the code up to "attempts" times
   for(i in 1:attempts){
 
-   # see if the code runs without errors
-   res<-executeCode(blocks$code, output = "html",output_file = NULL)
+    # see if the code runs without errors
+    res<-executeCode(blocks$code, output = "html",output.file = output.file )
 
-   # if there are errors
-   if(is.list(res) & ("error" %in% names(res) )){
+    # if there are errors
+    if(is.list(res) & ("error" %in% names(res) )){
 
-     # get error messages
+      # get error messages
 
-     # Collapse the character vectors within the list elements
-     # this is good if we have multiple errors in the list per element
-     collapsed_list <- lapply(res, function(x) paste(x, collapse = "\n"))
+      # Collapse the character vectors within the list elements
+      # this is good if we have multiple errors in the list per element
+      collapsed_list <- lapply(res, function(x) paste(x, collapse = "\n"))
 
-     # get error/warning text
-     errs<-  paste(paste0(names(collapsed_list ), ": ", collapsed_list ), collapse = "\n ")
+      # get error/warning text
+      errs<-  paste(paste0(names(collapsed_list ), ": ", collapsed_list ), collapse = "\n ")
 
-     # Use sub() to substitute the replacement string for the wildcard string
-     promptAddon <- sub("<error>", errs, promptTemplate)
+      # Use sub() to substitute the replacement string for the wildcard string
+      promptAddon <- sub("<error>", errs, promptTemplate)
 
-     #get an updated prompt
-     new.prompt<-paste(response,promptAddon)
+      #get an updated prompt
+      #new.prompt<-paste(response,promptAddon)
+      new.prompt<-promptAddon
 
-     # send prompt
-     response <- sendPrompt(agent,new.prompt,
-                            context=rbionfoExp,return.type="text",...)
 
-     # parse the code
-     blocks<- extractCode(text=response,delimiter="```")
+      # send prompt
+      #response <- sendPrompt(agent,new.prompt,
+      #                      context=rbionfoExp,return.type="text",...)
+      msgs<-append(msgs,list(list("role" = "user","content" = new.prompt)))
+      resp<-openai::create_chat_completion(model=agent$model,
+                                           messages=msgs,
+                                           openai_api_key = agent$openai_api_key)
 
-   }else{
-     # break the loop if the code works without errors
-     codeWorks=TRUE
-     break
+      response<-resp$choices[1,4]
+      msgs<-append(msgs,list(list("role" = "assistant","content" = response)))
 
-   }
+      # clean code from wrong backticks
+      response<-clean_code_blocks(response)
+
+      # parse the code
+      blocks<- extractCode2(text=response,delimiter="```")
+
+      # extract and install libs needed
+      extractInstallPkg(blocks$code)
+
+
+    }else{
+      # break the loop if the code works without errors
+      codeWorks=TRUE
+      break
+
+    }
 
   }
 
@@ -83,6 +127,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,...){
   # return the latest code and initial prompt and everthing else
   return(list(init.response=initial.response,
               init.blocks=initial.blocks,
+              final.response=response,
               final.blocks=blocks,
               code.works=codeWorks,
               exec.result=res,

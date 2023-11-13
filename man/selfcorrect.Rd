@@ -4,7 +4,14 @@
 \alias{selfcorrect}
 \title{Self correct the code returned by the agent}
 \usage{
-selfcorrect(agent, prompt, context = rbionfoExp, attempts = 3, ...)
+selfcorrect(
+  agent,
+  prompt,
+  context = rbionfoExp,
+  attempts = 3,
+  output.file = NULL,
+  ...
+)
 }
 \arguments{
 \item{agent}{An object containing the agent's information (e.g., type and model).}
