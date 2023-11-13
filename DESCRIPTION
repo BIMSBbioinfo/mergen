@@ -14,7 +14,8 @@ Depends:
 Imports:
     data.table (>= 1.9.6),
     openai,
-    rmarkdown
+    rmarkdown,
+    BiocManager,
 Suggests: 
     knitr
 VignetteBuilder: knitr
@@ -25,4 +26,5 @@ Collate:
     'executeCode.R'
     'selfcorrect.R'
     'clean_code_blocks.R'
+    'extractInstallPkg.R'
 RoxygenNote: 7.2.3
