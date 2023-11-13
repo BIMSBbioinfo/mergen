@@ -108,7 +108,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
       response<-clean_code_blocks(response)
 
       # parse the code
-      blocks<- extractCode2(text=response,delimiter="```")
+      blocks<- extractCode(text=response,delimiter="```")
 
       # extract and install libs needed
       extractInstallPkg(blocks$code)
