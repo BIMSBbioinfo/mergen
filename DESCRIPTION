@@ -28,4 +28,5 @@ Collate:
     'clean_code_blocks.R'
     'extractInstallPkg.R'
     'extractFilenames.R'
+    'fileHeaderPrompt.R'
 RoxygenNote: 7.2.3
