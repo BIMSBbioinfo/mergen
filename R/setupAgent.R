@@ -1,7 +1,12 @@
-
-#' setup the online large language model (LLM) API for subsequent tasks
+#' Setting up LLM agent
 #'
+#' This function is used for the
+#' setup of the online large language model (LLM) API for subsequent tasks
 #'
+#' @param model Specifies LLM to be used
+#' @param type Specifies type of model (chat or completion)
+#' @param openai_api_key openAI API key
+#' @param openai_organization openAI organization
 #'
 #' @example
 #' agent=setupopenaiAgent(model="text-davinci-003",type="completion", openai_api_key="")
@@ -36,6 +41,7 @@ setupAgent<-function(agentName="forefront.ai",parameters){
 
 #' setup a test agent to be used for test prompting
 #' should return a random set of responses
+#' @noRd
 setupTestAgent<-function(agentName="testAgent"){
 
   return(list(name="testAgent",model="crap",type="completion"))

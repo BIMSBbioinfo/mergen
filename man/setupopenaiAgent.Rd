@@ -2,7 +2,7 @@
 % Please edit documentation in R/setupAgent.R
 \name{setupopenaiAgent}
 \alias{setupopenaiAgent}
-\title{setup the online large language model (LLM) API for subsequent tasks}
+\title{Setting up LLM agent}
 \usage{
 setupopenaiAgent(
   model,
@@ -11,6 +11,16 @@ setupopenaiAgent(
   openai_organization = NULL
 )
 }
+\arguments{
+\item{model}{Specifies LLM to be used}
+
+\item{type}{Specifies type of model (chat or completion)}
+
+\item{openai_api_key}{openAI API key}
+
+\item{openai_organization}{openAI organization}
+}
 \description{
-setup the online large language model (LLM) API for subsequent tasks
+This function is used for the
+setup of the online large language model (LLM) API for subsequent tasks
 }
