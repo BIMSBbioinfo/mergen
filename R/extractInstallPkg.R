@@ -35,6 +35,18 @@ check_install<-function(package_name){
 }
 
 #' extract package names and install them
+#'
+#' This function extracts all package names that
+#' are needed to run the code returned by the agent
+#' and installs them as needed.
+#' @param code code block returned by the agent.
+#' @examples
+#' \dontrun{
+#' # check code for packages that need installing
+#' extractInstallPkg(code)
+#' }
+#'
+#' @export
 extractInstallPkg<-function(code){
 
   # Split the code into separate lines

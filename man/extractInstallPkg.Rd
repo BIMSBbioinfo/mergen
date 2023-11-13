@@ -6,6 +6,18 @@
 \usage{
 extractInstallPkg(code)
 }
+\arguments{
+\item{code}{code block returned by the agent.}
+}
 \description{
-extract package names and install them
+This function extracts all package names that
+are needed to run the code returned by the agent
+and installs them as needed.
+}
+\examples{
+\dontrun{
+# check code for packages that need installing
+extractInstallPkg(code)
+}
+
 }
