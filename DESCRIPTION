@@ -27,4 +27,5 @@ Collate:
     'selfcorrect.R'
     'clean_code_blocks.R'
     'extractInstallPkg.R'
+    'extractFilenames.R'
 RoxygenNote: 7.2.3
