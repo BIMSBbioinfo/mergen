@@ -12,13 +12,13 @@ LazyData: true
 Depends:
     R (>= 3.5.0),
 Imports:
-    data.table (>= 1.9.6),
     openai,
     rmarkdown,
     BiocManager,
 Suggests: 
     knitr,
     readxl,
+    data.table (>= 1.9.6),
 VignetteBuilder: knitr
 Collate:
     'setupAgent.R'
