@@ -16,7 +16,7 @@
 #'
 #'
 #' @export
-extractCode<-function(text,delimiter="```"){
+extractCode2<-function(text,delimiter="```"){
 
   # Split the text by the delimiter
   parts <- strsplit(text, delimiter, fixed = TRUE)[[1]]
@@ -26,7 +26,7 @@ extractCode<-function(text,delimiter="```"){
   mdf<-cbind(mloc[-length(mloc)],mloc[-1]) # create a df with matches
 
   if(nrow(mdf)>1){
-    mdf <- mdf[-seq(2, nrow(mdf), 2), ] # remove incorrect blocks
+    mdf <- mdf[-seq(2, nrow(mdf), 2),, drop=FALSE ] # remove incorrect blocks
   }
 
   # extract code blocks
