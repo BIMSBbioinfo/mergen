@@ -24,3 +24,8 @@ setupopenaiAgent(
 This function is used for the
 setup of the online large language model (LLM) API for subsequent tasks
 }
+\examples{
+\dontrun{
+agent=setupopenaiAgent(model="text-davinci-003",type="completion", openai_api_key="")
+}
+}

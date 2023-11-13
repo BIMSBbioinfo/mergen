@@ -8,8 +8,10 @@
 #' @param openai_api_key openAI API key
 #' @param openai_organization openAI organization
 #'
-#' @example
+#' @examples
+#' \dontrun{
 #' agent=setupopenaiAgent(model="text-davinci-003",type="completion", openai_api_key="")
+#' }
 #' @export
 setupopenaiAgent<-function(model,type=c("chat","completion"),
                            openai_api_key= Sys.getenv("OPENAI_API_KEY"),
