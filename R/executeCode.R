@@ -11,9 +11,9 @@
 #'
 #' @export
 executeCode <- function(code, output = "eval",
-                              output.file = NULL) {
+                         output.file = NULL) {
 
-   # Check if the output option is valid
+  # Check if the output option is valid
   if (!output %in% c("eval", "html")) {
     stop("Invalid output option. Choose either 'eval' or 'html'.")
   }
@@ -25,7 +25,7 @@ executeCode <- function(code, output = "eval",
 
   } else if (output == "html") {
 
-     # Check if the output.file is provided
+    # Check if the output.file is provided
     if (is.null(output.file)) {
       # Create a temporary output file path
       output.file <- tempfile(fileext = ".html")
@@ -38,17 +38,22 @@ executeCode <- function(code, output = "eval",
     print(temp_file)
     writeLines(code, temp_file)
 
+    wd<-getwd()
     expr <- quote({
 
+      message("HTML file created at:", output.file,"\n")
+      message("wdir is:", wd,"\n")
 
       # produce html fragment
       rmarkdown::render(temp_file, output_file = output.file,
+                        knit_root_dir=wd,
                         output_format=rmarkdown::output_format(
                           knitr = rmarkdown::knitr_options(
                             opts_chunk = list(echo = FALSE)),
                           pandoc = rmarkdown::pandoc_options(to = "html",from = NULL),
                           clean_supporting = TRUE,
-                          base_format=rmarkdown::html_fragment())
+                          base_format=rmarkdown::html_fragment()
+                        )
       )
 
 
@@ -100,7 +105,4 @@ executeCode <- function(code, output = "eval",
 
 }
 
-# Example usage
-#text <- "\n\nThe following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\t\")\n```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n```\nnormalized.data <- scale(data, center = TRUE, scale = TRUE)\n```\n\nFinally, the normalized data will be used to do a Principal Component Analysis (PCA):\n\n```\npca <- princomp(normalized.data)\n```"
-#parsed_code <- extractCode(text)
 
