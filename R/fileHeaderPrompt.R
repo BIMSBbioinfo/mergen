@@ -17,9 +17,9 @@ fileHeaderPrompt<-function(filenames){
     output=paste0(output,"\n",filename,":\n")
 
     if(grepl("\\.(xls|xlsx)$", filename, ignore.case = TRUE)){
-      require(readxl)
+      requireNamespace("readxl",quietly = TRUE)
 
-      data <- read_excel(filename,  n_max=2)
+      data <- readxl::read_excel(filename,  n_max=2)
 
       # Convert the data frame to a string with \n and \t separators
       data_string <- apply(data, 1, function(row) paste(row, collapse = "\t"))

@@ -17,7 +17,8 @@ Imports:
     rmarkdown,
     BiocManager,
 Suggests: 
-    knitr
+    knitr,
+    readxl,
 VignetteBuilder: knitr
 Collate:
     'setupAgent.R'
