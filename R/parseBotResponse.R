@@ -16,7 +16,7 @@
 #'
 #'
 #' @export
-extractCode2<-function(text,delimiter="```"){
+extractCode<-function(text,delimiter="```"){
 
   # Split the text by the delimiter
   parts <- strsplit(text, delimiter, fixed = TRUE)[[1]]
