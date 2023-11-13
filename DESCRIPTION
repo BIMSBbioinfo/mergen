@@ -24,4 +24,5 @@ Collate:
     'sendPrompt.R'
     'executeCode.R'
     'selfcorrect.R'
+    'clean_code_blocks.R'
 RoxygenNote: 7.2.3
