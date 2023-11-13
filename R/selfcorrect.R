@@ -8,6 +8,7 @@
 #' @param prompt The prompt text to send to the language model.
 #' @param context Optional context to provide alongside the prompt (default is rbionfoExp).
 #' @param attempts numeric value denoting how many times the code should be sent back for fixing.
+#' @param output.file Optional output file created holding parsed code
 #' @param ... Additional arguments to be passed to the \code{\link{sendPrompt}} function.
 #' @return A list containing the following elements:
 #' \item{init.response}{A character vector representing the initial prompt response.}

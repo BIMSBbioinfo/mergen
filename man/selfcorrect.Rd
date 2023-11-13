@@ -22,6 +22,8 @@ selfcorrect(
 
 \item{attempts}{numeric value denoting how many times the code should be sent back for fixing.}
 
+\item{output.file}{Optional output file created holding parsed code}
+
 \item{...}{Additional arguments to be passed to the \code{\link{sendPrompt}} function.}
 }
 \value{
