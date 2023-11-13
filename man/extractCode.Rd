@@ -20,7 +20,8 @@ The function parses the code and can return the text and code as single blocks
 This good for execution and might be useful for displaying purposes later on.
 }
 \examples{
-text <- "\n\nThe following, normalize the table and do PCA.\n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\\\t\")\n```"
+text <- "\n\nThe following, normalize the table and do PCA.
+\n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\\\t\")\n```"
 result <- extractCode(text)
 print(result$code)
 print(result$text)

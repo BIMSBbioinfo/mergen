@@ -9,7 +9,8 @@
 #' @return A list with two elements: 'code' and 'text'. 'code' contains the concatenated code blocks, and
 #'         'text' contains the remaining text with code blocks removed.
 #' @examples
-#' text <- "\n\nThe following, normalize the table and do PCA.\n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\t\")\n```"
+#' text <- "\n\nThe following, normalize the table and do PCA.
+#' \n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\t\")\n```"
 #' result <- extractCode(text)
 #' print(result$code)
 #' print(result$text)
