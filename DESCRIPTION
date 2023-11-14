@@ -19,6 +19,7 @@ Suggests:
     knitr,
     readxl,
     data.table (>= 1.9.6),
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Collate:
     'setupAgent.R'
@@ -31,3 +32,4 @@ Collate:
     'extractFilenames.R'
     'fileHeaderPrompt.R'
 RoxygenNote: 7.2.3
+Config/testthat/edition: 3
