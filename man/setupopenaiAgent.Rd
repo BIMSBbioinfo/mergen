@@ -12,9 +12,9 @@ setupopenaiAgent(
 )
 }
 \arguments{
-\item{model}{Specifies LLM to be used}
+\item{model}{Specify LLM to be used}
 
-\item{type}{Specifies type of model (chat or completion)}
+\item{type}{Specify type of model (chat or completion)}
 
 \item{openai_api_key}{openAI API key}
 

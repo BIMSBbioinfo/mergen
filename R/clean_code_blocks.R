@@ -4,7 +4,7 @@
 #' are returned by the agent to ensure code blocks
 #' can run.
 #'
-#' @param response response recieved by the agent
+#' @param response response recieved from the agent
 #'
 #' @examples
 #' \dontrun{
