@@ -1,3 +1,4 @@
+#'@noRd
 test_argument_validation <- function(
     function_name,
     argument_name,
@@ -24,7 +25,7 @@ test_argument_validation <- function(
     non_valid_values <- append(non_valid_values, list(NULL))
   }
 
-  test_that(
+  testthat::test_that(
     paste0(function_name, "() validates ", argument_name), {
       purrr::walk(
         non_valid_values,
@@ -41,7 +42,7 @@ test_argument_validation <- function(
 
           if (suppress_warnings) {
             suppressWarnings(
-              expect_error(
+              testthat::expect_error(
                 do.call(
                   what = function_object,
                   args = argument_object
@@ -49,7 +50,7 @@ test_argument_validation <- function(
               )
             )
           } else {
-            expect_error(
+            testthat::expect_error(
               do.call(
                 what = function_object,
                 args = argument_object
