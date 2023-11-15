@@ -15,11 +15,13 @@ Imports:
     openai,
     rmarkdown,
     BiocManager,
+    assertthat (>= 0.2.1),
 Suggests: 
     knitr,
     readxl,
     data.table (>= 1.9.6),
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    purrr (>= 0.3.4),
 VignetteBuilder: knitr
 Collate:
     'setupAgent.R'
@@ -31,5 +33,6 @@ Collate:
     'extractInstallPkg.R'
     'extractFilenames.R'
     'fileHeaderPrompt.R'
+    'test-helper-test_argument_validation.R'
 RoxygenNote: 7.2.3
 Config/testthat/edition: 3
