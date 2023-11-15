@@ -35,7 +35,8 @@ extractCode<-function(text,delimiter="```"){
 
   # Concatenate the code blocks and remaining text
   concatenated_code <- paste(code_blocks, collapse = "\n")
-  concatenated_remaining_text <-gsub("```.*?```", "\n",text)
+  text_reg<-paste0(delimiter,".*?",delimiter)
+  concatenated_remaining_text <-gsub(text_reg, "\n",text)
 
   return(list(code = concatenated_code,
               text = concatenated_remaining_text))
