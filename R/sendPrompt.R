@@ -27,6 +27,32 @@ rbionfoExp="Act as an expert bioformatician and R user. Answer questions using y
 sendPrompt<-function(agent,prompt,context=rbionfoExp,
                      return.type=c("text","object"),...){
 
+  # argument validation
+  #-----------------------------------------------------------------------------
+
+  assertthat::assert_that(
+    assertthat::`%has_name%`(agent,c("name","model","type","openai_api_key")),
+    assertthat::noNA(agent)
+  )
+
+  assertthat::assert_that(
+    assertthat::is.string(prompt),
+    assertthat::noNA(prompt)
+  )
+
+  if (!is.null(context)) {
+    assertthat::assert_that(
+      assertthat::is.string(context),
+      assertthat::noNA(context)
+    )
+  }
+
+  assertthat::assert_that(
+    assertthat::is.string(return.type),
+    assertthat::noNA(return.type)
+  )
+
+  # -------------------------------------------------------------------------------------
 
   # define the prompt function based on openai
   if(agent$name=="openai"){
@@ -87,7 +113,7 @@ testPrompter<-function(agent,prompt){
 
     "\n\nThe second response.The following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\t\")\n```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n```\nnormalized.data <- scale(data, center = TRUE, scale = TRUE)\n```\n\nFinally, the normalized data will be used to do a Principal Component Analysis (PCA):\n\n```\npca <- princomp(normalized.data)\n```",
 
-    "\n\nThe following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\nplot(1:10)```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n"
+    "\n\nThe third response.The following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\nplot(1:10)```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n"
     )
 
   return(botResponses[[prompterCount]])
