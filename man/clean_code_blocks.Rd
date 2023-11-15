@@ -7,7 +7,7 @@
 clean_code_blocks(response)
 }
 \arguments{
-\item{response}{response recieved by the agent}
+\item{response}{response recieved from the agent}
 }
 \description{
 This function cleans up the code blocks which
