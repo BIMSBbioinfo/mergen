@@ -26,6 +26,35 @@
 #' @export
 selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NULL,...){
 
+  #---------------------------------------------------------------------------
+  # Validate arguments
+
+  assertthat::assert_that(
+    assertthat::`%has_name%`(agent,c("name","model","type","openai_api_key")),
+    assertthat::noNA(agent)
+  )
+
+  assertthat::assert_that(
+    assertthat::is.string(prompt),
+    assertthat::noNA(prompt)
+  )
+
+  assertthat::assert_that(
+    assertthat::is.string(context),
+  )
+
+  assertthat::assert_that(
+    assertthat::is.number(attempts),
+    assertthat::noNA(attempts)
+  )
+
+  if (!is.null(output.file)) {
+    assertthat::assert_that(
+      assertthat::is.string(output.file),
+      assertthat::noNA(output.file)
+    )
+  }
+  #------------------------------------------------------------------------------------------
   # send prompt
   response <- sendPrompt(agent,prompt,context,return.type="text",...)
 
