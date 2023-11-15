@@ -8,3 +8,6 @@ test_that("extractInstallPkg extracts does not extract when package is not calle
   prompt <- "#code tells you to load a library\nx<-5\n mergen::extractInstallPkg()"
   expect_no_message(extractInstallPkg(prompt))
 })
+
+
+
