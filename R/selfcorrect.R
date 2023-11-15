@@ -40,7 +40,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   )
 
   assertthat::assert_that(
-    assertthat::is.string(context),
+    assertthat::is.string(context)
   )
 
   assertthat::assert_that(

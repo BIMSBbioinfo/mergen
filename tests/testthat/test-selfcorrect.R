@@ -32,3 +32,4 @@ test_argument_validation(
   argument_type = "string",
   allow_null = FALSE
 )
+
