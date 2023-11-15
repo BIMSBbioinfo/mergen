@@ -9,5 +9,3 @@ test_that("extractInstallPkg extracts does not extract when package is not calle
   expect_no_message(extractInstallPkg(prompt))
 })
 
-
-
