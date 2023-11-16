@@ -19,6 +19,19 @@
 #' @export
 extractCode<-function(text,delimiter="```"){
 
+  # argument validation
+  # -----------------------------------------------------------------------------
+  assertthat::assert_that(
+    assertthat::is.string(text),
+    assertthat::noNA(text)
+  )
+
+  assertthat::assert_that(
+    assertthat::is.string(delimiter),
+    assertthat::noNA(delimiter)
+  )
+  # -----------------------------------------------------------------------------
+
   # Split the text by the delimiter
   parts <- strsplit(text, delimiter, fixed = TRUE)[[1]]
 
