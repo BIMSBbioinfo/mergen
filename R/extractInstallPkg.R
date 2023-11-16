@@ -18,6 +18,14 @@
 #' @export
 check_install<-function(package_name){
 
+  # argument validation
+  # -----------------------------------------------------------------------------
+  assertthat::assert_that(
+    assertthat::is.string(package_name),
+    assertthat::noNA(package_name)
+  )
+  # -----------------------------------------------------------------------------
+
   if (!require(package_name, character.only = TRUE)) {
     if (!requireNamespace("BiocManager", quietly = TRUE)) {
       install.packages("BiocManager")
@@ -48,6 +56,14 @@ check_install<-function(package_name){
 #'
 #' @export
 extractInstallPkg<-function(code){
+
+  # argument validation
+  # -----------------------------------------------------------------------------
+  assertthat::assert_that(
+    assertthat::is.string(code),
+    assertthat::noNA(code)
+  )
+  # -----------------------------------------------------------------------------
 
   # Split the code into separate lines
   code_lines <- strsplit(code, "\n")[[1]]
