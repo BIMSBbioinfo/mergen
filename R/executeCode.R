@@ -27,8 +27,8 @@ executeCode <- function(code, output = "eval",
 
   if (!is.null(output.file)){
     assertthat::assert_that(
-      assertthat::is.string(output),
-      assertthat::noNA(output)
+      assertthat::is.string(output.file),
+      assertthat::noNA(output.file)
     )}
 
   #-------------------------------------------------------------------

@@ -16,7 +16,7 @@ test_argument_validation(
   function_name = "executeCode",
   argument_name = "output.file",
   argument_type = "string",
-  allow_null = FALSE
+  allow_null = TRUE
 )
 
 
@@ -30,14 +30,17 @@ test_that("Code blocks can be executed", {
 })
 
 test_that("function is stopped when output is invalid", {
-  expect_error(executeCode("2*2", ouput="nonexisting"))
+  expect_error(executeCode("2*2", output="nonexisting"))
 })
 
 test_that("Code blocks can be executed with html output", {
   expect_message(executeCode("2 * 2",output ="html"))
 })
 
-
-test_that("Improper code gives a warning", {
+test_that("Improper code gives an error", {
  expect_error(executeCode("2@@2"))
+})
+
+test_that("Warnings are seen and saved",{
+  expect_warning(executeCode("warning()"))
 })
