@@ -1,3 +1,10 @@
+test_argument_validation(
+  function_name = "extractFilenames",
+  argument_name = "text",
+  argument_type = "string",
+  allow_null = FALSE
+)
+
 test_that("No filename is returned when there is no filename", {
   prompt <- "There is no filename in here, just text and a little confusing code ```r xlsx=5```"
   expect_equal(extractFilenames(prompt),NA)

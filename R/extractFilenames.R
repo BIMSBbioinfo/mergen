@@ -9,6 +9,15 @@
 #' }
 #' @export
 extractFilenames <- function(text) {
+
+  # argument validation
+  # -----------------------------------------------------------------------------
+  assertthat::assert_that(
+    assertthat::is.string(text),
+    assertthat::noNA(text)
+  )
+  # -----------------------------------------------------------------------------
+
   # Use regular expression to match common file extensions
   matches <- gregexpr("\\b\\S+\\.(txt|tsv|csv|xls|xlsx)\\b", text, ignore.case = TRUE)
   filenames <- regmatches(text, matches)[[1]]
