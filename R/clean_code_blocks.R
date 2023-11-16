@@ -13,6 +13,15 @@
 #' @export
 clean_code_blocks<-function(response){
 
+  # argument validation
+  #-----------------------------------------------------------------------------
+  assertthat::assert_that(
+    assertthat::is.string(response),
+    assertthat::noNA(response)
+  )
+
+  #-----------------------------------------------------------------------------
+
   #clear response of weird characters, otherwise this will return as error
   response<-gsub("```r", "```", response)
   response<-gsub("```R", "```", response)

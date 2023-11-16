@@ -41,6 +41,6 @@ test_that("Improper code gives an error", {
  expect_error(executeCode("2@@2"))
 })
 
-test_that("Warnings are seen and saved",{
-  expect_warning(executeCode("warning()"))
+test_that("Errors are seen and saved",{
+  expect_equal(executeCode("t.test(1)")$error,"not enough 'x' observations")
 })
