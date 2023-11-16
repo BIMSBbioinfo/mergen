@@ -13,6 +13,26 @@
 executeCode <- function(code, output = "eval",
                          output.file = NULL) {
 
+  # Argument validation
+  #------------------------------------------------------------------
+  assertthat::assert_that(
+    assertthat::is.string(code),
+    assertthat::noNA(code)
+  )
+
+  assertthat::assert_that(
+    assertthat::is.string(output),
+    assertthat::noNA(output)
+  )
+
+  if (!is.null(output.file)){
+    assertthat::assert_that(
+      assertthat::is.string(output),
+      assertthat::noNA(output)
+    )}
+
+  #-------------------------------------------------------------------
+
   # Check if the output option is valid
   if (!output %in% c("eval", "html")) {
     stop("Invalid output option. Choose either 'eval' or 'html'.")

@@ -1,3 +1,25 @@
+test_argument_validation(
+  function_name = "executeCode",
+  argument_name = "code",
+  argument_type = "string",
+  allow_null = FALSE
+)
+
+test_argument_validation(
+  function_name = "executeCode",
+  argument_name = "output",
+  argument_type = "string",
+  allow_null = FALSE
+)
+
+test_argument_validation(
+  function_name = "executeCode",
+  argument_name = "output.file",
+  argument_type = "string",
+  allow_null = FALSE
+)
+
+
 test_that("Code blocks can be executed", {
   expect_equal(executeCode("2 * 2"), 4)
 })
