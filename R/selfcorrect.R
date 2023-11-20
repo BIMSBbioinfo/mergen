@@ -29,10 +29,13 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   #---------------------------------------------------------------------------
   # Validate arguments
 
-  assertthat::assert_that(
-    assertthat::`%has_name%`(agent,c("name","model","type","openai_api_key")),
-    assertthat::noNA(agent)
-  )
+  if (agent$name=="openai"){
+    assertthat::assert_that(
+      assertthat::`%has_name%`(agent,c("name","model","type","openai_api_key")),
+      assertthat::noNA(agent)
+    )
+  }
+
 
   assertthat::assert_that(
     assertthat::is.string(prompt),
