@@ -134,13 +134,19 @@ testPrompter<-function(agent,prompt){
 # across agents
 #' @noRd
 .openai_chat<-function(agent,prompt,...){
-
-  openai::create_chat_completion(model=agent$model,
-                                 messages=list(
-                                   list(
-                                     "role" = "user",
-                                     "content" = prompt
-                                       )),
-                                 openai_api_key = agent$openai_api_key,
-                                 ...)
+  args <- list(...)
+  if ("messages" %in% names(args)){
+    openai::create_chat_completion(model=agent$model,
+                                   messages=args$messages,
+                                   openai_api_key = agent$openai_api_key)
+  }else{
+    openai::create_chat_completion(model=agent$model,
+                                   messages=list(
+                                     list(
+                                       "role" = "user",
+                                       "content" = prompt
+                                     )),
+                                   openai_api_key = agent$openai_api_key,
+                                   ...)
+  }
 }

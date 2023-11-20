@@ -97,6 +97,10 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   # set up the on of the final variables that will be returned in the end
   codeWorks=FALSE
 
+  # create temporary agent with chat completion for attempts
+  temp_agent <- agent
+  temp_agent$type <- "chat"
+
   # execute the code up to "attempts" times
   for(i in 1:attempts){
 
@@ -127,11 +131,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
       #response <- sendPrompt(agent,new.prompt,
       #                      context=rbionfoExp,return.type="text",...)
       msgs<-append(msgs,list(list("role" = "user","content" = new.prompt)))
-      resp<-openai::create_chat_completion(model=agent$model,
-                                           messages=msgs,
-                                           openai_api_key = agent$openai_api_key)
-
-      response<-resp$choices[1,4]
+      response <- sendPrompt(agent=temp_agent, prompt="",return.type = "text",messages=msgs)
       msgs<-append(msgs,list(list("role" = "assistant","content" = response)))
 
       # clean code from wrong backticks
