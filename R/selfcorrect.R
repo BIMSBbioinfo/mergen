@@ -130,8 +130,6 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
 
 
       # send prompt
-      #response <- sendPrompt(agent,new.prompt,
-      #                      context=rbionfoExp,return.type="text",...)
       msgs<-append(msgs,list(list("role" = "user","content" = new.prompt)))
       response <- sendPrompt(agent=temp_agent, prompt="",return.type = "text",messages=msgs)
       msgs<-append(msgs,list(list("role" = "assistant","content" = response)))
