@@ -68,6 +68,12 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   blocks <- extractCode(text=initial.response,delimiter="```")
   initial.blocks <- blocks
 
+  # check if any code is returned
+  if(blocks$code==""){
+    stop("no code returned")
+
+  }
+
   # extract and install packages if needed
   extractInstallPkg(blocks$code)
 
@@ -85,11 +91,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   )
 
 
-  # check if any code is returned
-  if(blocks$code==""){
-    stop("no code returned")
 
-  }
 
   # Define the prompt template to inject the error message
   promptTemplate <- "The previous code returned the following errors and/or warnings,\n <error> \n return fixed code in one block, delimited in triple backticks"
