@@ -30,10 +30,12 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
   # argument validation
   #-----------------------------------------------------------------------------
 
-  assertthat::assert_that(
-    assertthat::`%has_name%`(agent,c("name","model","type","openai_api_key")),
-    assertthat::noNA(agent)
-  )
+  if(agent$name=="openai"){
+    assertthat::assert_that(
+      assertthat::`%has_name%`(agent,c("name","model","type","openai_api_key")),
+      assertthat::noNA(agent)
+    )
+  }
 
   assertthat::assert_that(
     assertthat::is.string(prompt),
@@ -68,6 +70,8 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
 
   }else if(agent$name=="testAgent"){
     promptFunc=testPrompter
+  }else if(agent$name=="userAgent"){
+    promptFunc=.userPrompter
   }else{
     stop("the specified LLM agent is not compatiable with the current setup")
   }
@@ -149,4 +153,44 @@ testPrompter<-function(agent,prompt,...){
                                    openai_api_key = agent$openai_api_key,
                                    ...)
   }
+}
+
+# internal completion code for user ai
+# hides specific stuff so that promptFunc works in a unified way
+# across agents
+# how to send prompt to agent in unified way. Think about this!
+#' @noRd
+.userPrompter <- function(agent,prompt,...){
+
+  #check
+  print("imhere")
+  print(agent$url)
+
+  #setup body for request
+  #specific per url used!
+  body <- list()
+  body[["model"]] <- agent$model
+  body[["messages"]] <- list(list("role"="user","content"=prompt))
+  body[["user"]] <- NULL
+  body[["temperature"]] <- 1
+  body[["top_p"]] <- 1
+  body[["n"]] <- 1
+  body[["stream"]] <- FALSE
+  body[["stop"]] <- NULL
+  body[["max_tokens"]] <- NULL
+  body[["presence_penalty"]] <- 0
+  body[["frequency_penalty"]] <- 0
+  body[["logit_bias"]] <- NULL
+
+  # send request
+  response <- httr::POST(
+    url = agent$url,
+    httr::add_headers(.headers = agent$headers),
+    body = body,
+    encode = "json"
+  )
+
+  parsed <- response %>%
+    httr::content(as = "text", encoding = "UTF-8") %>%
+    jsonlite::fromJSON(flatten = TRUE)
 }
