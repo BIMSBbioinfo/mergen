@@ -34,10 +34,15 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 
 #' setup any online  large language model (LLM) API for subsequent tasks
 #' parameters of the agent
-#' How does it return the text? or errors, think about this
+#' sysgetenv default to something different!
 #' @noRd
-setupAgent<-function(agentName="forefront.ai",parameters){
-
+setupAgent<-function(agentName="userAgent", URL, task, model, ai_api_key=Sys.getenv("OPENAI_API_KEY")){
+  base_url <- glue::glue("{URL}{task}")
+  headers <- c(
+    "Authorization" = paste("Bearer", ai_api_key),
+    "Content-Type" = "application/json"
+  )
+  return(list(name="userAgent",url=base_url, model=model, headers=headers,ai_api_key=ai_api_key))
 }
 
 
