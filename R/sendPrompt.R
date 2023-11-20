@@ -96,7 +96,7 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
 # it is used to test the selfcorrect function() and maybe used for other
 # tests
 #' @noRd
-testPrompter<-function(agent,prompt){
+testPrompter<-function(agent,prompt,...){
 
   # Define a static variable to keep track of the count
   if (!exists("prompterCount")) {
