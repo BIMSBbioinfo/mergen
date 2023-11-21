@@ -37,6 +37,13 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
     )
   }
 
+  if(agent$name=="userAgent"){
+    assertthat::assert_that(
+      assertthat::`%has_name%`(agent,c("name","model","url","headers","ai_api_key")),
+      assertthat::noNA(agent)
+    )
+  }
+
   assertthat::assert_that(
     assertthat::is.string(prompt),
     assertthat::noNA(prompt)
