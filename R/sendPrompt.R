@@ -162,35 +162,83 @@ testPrompter<-function(agent,prompt,...){
 #' @noRd
 .userPrompter <- function(agent,prompt,...){
 
-  #check
-  print("imhere")
-  print(agent$url)
+  if (grepl("openai",agent$url)){
+      #setup body for request
+      body <- list()
+      body[["model"]] <- agent$model
+      body[["messages"]] <- list(list("role"="user","content"=prompt))
+      body[["user"]] <- NULL
+      body[["temperature"]] <- 1
+      body[["top_p"]] <- 1
+      body[["n"]] <- 1
+      body[["stream"]] <- FALSE
+      body[["stop"]] <- NULL
+      body[["max_tokens"]] <- NULL
+      body[["presence_penalty"]] <- 0
+      body[["frequency_penalty"]] <- 0
+      body[["logit_bias"]] <- NULL
 
-  #setup body for request
-  #specific per url used!
-  body <- list()
-  body[["model"]] <- agent$model
-  body[["messages"]] <- list(list("role"="user","content"=prompt))
-  body[["user"]] <- NULL
-  body[["temperature"]] <- 1
-  body[["top_p"]] <- 1
-  body[["n"]] <- 1
-  body[["stream"]] <- FALSE
-  body[["stop"]] <- NULL
-  body[["max_tokens"]] <- NULL
-  body[["presence_penalty"]] <- 0
-  body[["frequency_penalty"]] <- 0
-  body[["logit_bias"]] <- NULL
+    # send request
+    response <- httr::POST(
+      url = agent$url,
+      httr::add_headers(.headers = agent$headers),
+      body = body,
+      encode = "json"
+    )
 
-  # send request
-  response <- httr::POST(
-    url = agent$url,
-    httr::add_headers(.headers = agent$headers),
-    body = body,
-    encode = "json"
-  )
+    parsed <- response %>%
+      httr::content(as = "text", encoding = "UTF-8") %>%
+      jsonlite::fromJSON(flatten = TRUE)
 
-  parsed <- response %>%
-    httr::content(as = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON(flatten = TRUE)
+    return(parsed$choices[1,4])
+  }else if (grepl("replicate",agent$url)){
+
+    #setup body for request
+    body <- list()
+    body[["version"]] <- agent$model
+    body[["input"]] <- list("prompt"= prompt,"system_prompt"=rbionfoExp)
+
+    #send request:
+    posted <- httr::POST(
+      url = agent$url,
+      httr::add_headers(.headers = agent$headers ),
+      body = body,
+      encode = "json"
+    )
+
+    parsed_post <- posted %>%
+      httr::content(as = "text", encoding = "UTF-8") %>%
+      jsonlite::fromJSON(flatten = TRUE)
+
+    #fetch status. If not yet finished request again
+    respons <- httr::GET(
+      url = parsed_post$urls$get,
+      httr::add_headers(.headers = agent$headers )
+    )
+
+    parsed_get <- respons %>%
+      httr::content(as = "text", encoding = "UTF-8") %>%
+      jsonlite::fromJSON(flatten = TRUE)
+
+    while (parsed_get$status!= "succeeded"){
+      #fetch response and parse
+      respons <- httr::GET(
+        url = parsed_post$urls$get,
+        httr::add_headers(.headers = agent$headers )
+      )
+
+      parsed_get <- respons %>%
+        httr::content(as = "text", encoding = "UTF-8") %>%
+        jsonlite::fromJSON(flatten = TRUE)
+      # pause .2 sec until next request
+      Sys.sleep(.2)
+    }
+
+    # flatten response
+    response<-c()
+    for (i in parsed_get$output){
+      response <- paste0(response,i)
+    }
+    return(response)
+  }
 }
