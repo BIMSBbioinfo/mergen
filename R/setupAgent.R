@@ -33,9 +33,26 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 
 
 #' setup any online  large language model (LLM) API for subsequent tasks
-#' parameters of the agent
-#' sysgetenv default to something different!
-#' @noRd
+#'
+#' This function sets up any online large language model API for tasks.
+#' @param URL base url for LLM you wish to use
+#' @param task specific task LLM needs to complete. Syntax depends on LLM URL used.
+#' @param model model you wish to use
+#' @param ai_api_key personal API key for accessing LLM
+#' @param authorization_name name of authorization type to be parsed to website. Depends on URL used.
+#'
+#' @examples
+#' \dontrun{
+#' myAgent <- setupAgent (URL="https://api.replicate.com/v1/", task = "predictions",
+#' model="02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
+#' ai_api_key=Sys.getenv("API_KEY"), authorization_name = "Token")
+#' myAgent <- setupAgent (URL="https://api.openai.com/v1/", task = "chat/completions",
+#' model="gtp-4",
+#' ai_api_key=Sys.getenv("API_KEY"), authorization_name = "Bearer")
+#' }
+#' @export
+
+
 setupAgent<-function(URL, task, model, ai_api_key, authorization_name){
   base_url <- glue::glue("{URL}{task}")
   headers <- c(
