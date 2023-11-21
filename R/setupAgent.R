@@ -36,7 +36,7 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' parameters of the agent
 #' sysgetenv default to something different!
 #' @noRd
-setupAgent<-function(agentName="userAgent", URL, task, model, ai_api_key){
+setupAgent<-function(URL, task, model, ai_api_key){
   base_url <- glue::glue("{URL}{task}")
   if (grepl("openai",URL)){
     headers <- c(
