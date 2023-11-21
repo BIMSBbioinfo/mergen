@@ -36,19 +36,11 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' parameters of the agent
 #' sysgetenv default to something different!
 #' @noRd
-setupAgent<-function(URL, task, model, ai_api_key){
+setupAgent<-function(URL, task, model, ai_api_key, authorization_name){
   base_url <- glue::glue("{URL}{task}")
-  if (grepl("openai",URL)){
-    headers <- c(
-      "Authorization" = paste("Bearer", ai_api_key),
-      "Content-Type" = "application/json")
-  }else if(grepl("replicate",URL)){
-      headers <- c(
-        "Authorization" = paste("Token", ai_api_key),
-        "Content-Type" = "application/json")
-  }else{
-      stop("Current URL handeling not implemented.")
-    }
+  headers <- c(
+    "Authorization" = paste(authorization_name, ai_api_key),
+    "Content-Type" = "application/json")
   return(list(name="userAgent",url=base_url, model=model, headers=headers,ai_api_key=ai_api_key))
 }
 
