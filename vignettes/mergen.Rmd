@@ -1,0 +1,51 @@
+---
+title: "Introduction to mergen"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to mergen}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup,include=FALSE}
+library(mergen)
+```
+
+mergen is a package which employs artificial intelligence to convert data analysis questions into executable code, explanations, and algorithms. The self-correction features allow the generated code to be optimized for performance and accuracy. mergen features a user-friendly chat interface, enabling users to interact with the AI agent and extract valuable insights from their data effortlessly.
+
+This document introduces you to mergen's basic set of tools, and shows you how to apply them
+to answer data analysis related questions and generate relevant R code. 
+
+### setting up an AI-agent
+To be able to interact with an AI agent and use this agent for subsequent tasks, mergen contains two functions for setting up a framework for the agent. Which function to use, depends on the AI agent you want to use. Mergen allows you to set up an agent for the openai API platform, but also other platforms that behave similarly.
+
+#### setting up an openai agent
+For setting up an agent for the openai API platform, you can make use of the `setupopenaiAgent` function.
+Let's look how to setting up an agent works:
+
+```{r}
+myAgent <- setupopenaiAgent(model="gpt-4",type="chat",openai_api_key="your_key")
+myAgent
+```
+
+the `setupopenaiAgent` function returns a list containing all the agent information which is can be used by subsequent functions. Important to note is that the openai_api_key should contain your openai API key, given as a string. 
+
+#### setting up an agent for other APIs
+mergen also contains a function which allows you to set up an agent for other APIs. Let's look at how this function works:
+
+```{r}
+myAgent <- setupAgent(URL="https://api.replicate.com/v1/", task = "predictions",
+model="02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
+ai_api_key="your_key", authorization_name = "Token")
+
+myAgent
+```
+
+As shown above, the `setupAgent` function takes different arguments then the `setupopenaiAgent` function. When setting up an agent with `setupAgent`, a base url for LLM you wish to use, a task, the model name, your API key, and authorization_name needs to be given. Bearer authentication (also called token authentication) is done by sending security tokens in the authorization header. Authorization name depends on the specific syntax for the authorization header used by your API. Popular syntax used by most websites is  "Bearer" or "Token".
