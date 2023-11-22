@@ -87,7 +87,7 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
   final.prompt=paste(context,prompt,sep="\n")
 
   # send the prompt and get the result
-  res<-promptFunc(agent=agent, prompt=final.prompt, ...)
+  res<-promptFunc(agent=agent, prompt=final.prompt, context=context, ...)
 
   if(return.type=="text" & agent$name=="openai" ){
 
@@ -107,7 +107,7 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
 # it is used to test the selfcorrect function() and maybe used for other
 # tests
 #' @noRd
-testPrompter<-function(agent,prompt,...){
+testPrompter<-function(agent,prompt,context,...){
 
   # Define a static variable to keep track of the count
   if (!exists("prompterCount")) {
@@ -144,8 +144,9 @@ testPrompter<-function(agent,prompt,...){
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
 #' @noRd
-.openai_chat<-function(agent,prompt,...){
+.openai_chat<-function(agent,prompt, context...){
   args <- list(...)
+  # for working with self-correct function
   if ("messages" %in% names(args)){
     openai::create_chat_completion(model=agent$model,
                                    messages=args$messages,
@@ -165,12 +166,11 @@ testPrompter<-function(agent,prompt,...){
 # internal completion code for user ai
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
-# how to send prompt to agent in unified way. Think about this!
 #' @noRd
-.userPrompter <- function(agent,prompt,...){
+.userPrompter <- function(agent,prompt,context...){
 
   if (grepl("openai",agent$url)){
-      #setup body for request
+      #setup body for openai request
       body <- list()
       body[["model"]] <- agent$model
       body[["messages"]] <- list(list("role"="user","content"=prompt))
@@ -193,17 +193,20 @@ testPrompter<-function(agent,prompt,...){
       encode = "json"
     )
 
+    # parse request
     parsed <- response %>%
       httr::content(as = "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)
 
     return(parsed$choices[1,4])
+
   }else if (grepl("replicate",agent$url)){
 
-    #setup body for request
+    #setup body for replicate request
     body <- list()
     body[["version"]] <- agent$model
-    body[["input"]] <- list("prompt"= prompt,"system_prompt"=rbionfoExp)
+    body[["input"]] <- list("prompt"= prompt,"system_prompt"=context)
+    body[["max_new_tokens"]]<-800
 
     #send request:
     posted <- httr::POST(
@@ -213,11 +216,12 @@ testPrompter<-function(agent,prompt,...){
       encode = "json"
     )
 
+    #parse response to retrieve url needed for fetching response
     parsed_post <- posted %>%
       httr::content(as = "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)
 
-    #fetch status. If not yet finished request again
+    #fetch status and parse
     respons <- httr::GET(
       url = parsed_post$urls$get,
       httr::add_headers(.headers = agent$headers )
@@ -227,6 +231,7 @@ testPrompter<-function(agent,prompt,...){
       httr::content(as = "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)
 
+    # If not yet finished request again untill finished
     while (parsed_get$status!= "succeeded"){
       #fetch response and parse
       respons <- httr::GET(
