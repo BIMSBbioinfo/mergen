@@ -49,3 +49,22 @@ myAgent
 ```
 
 As shown above, the `setupAgent` function takes different arguments then the `setupopenaiAgent` function. When setting up an agent with `setupAgent`, a base url for LLM you wish to use, a task, the model name, your API key, and authorization_name needs to be given. Bearer authentication (also called token authentication) is done by sending security tokens in the authorization header. Authorization name depends on the specific syntax for the authorization header used by your API. Popular syntax used by most websites is  "Bearer" or "Token".
+
+### sending a prompt
+
+Once you have set up an agent, it is time to ask some questions to your AI model of choice! For this, you can make use of the `sendPrompt` function, or the `selfcorrect` function. The choice which one to use will depend on if you want possible errors in the answered code to be corrected by sending another request to the model or not. 
+
+#### Using the sendPrompt function
+Sending a prompt with the `sendPrompt` function is very easy. The function takes the arguments agent, prompt, return.type and context. By default the context is set to rbionfoExp. This tells your model of choice to act as a bioinformatics expert, and return any code as R code in triple backticks. Your prompt must be given as a string, but can contain any question and additional information that you want to send. The return value is a string containing the models answer. 
+
+```{r,eval=FALSE}
+answer <- sendPrompt(myAgent,
+                     "how do I perform PCA on data in
+                     a file called test.txt?",return.type = "text")
+answer
+```
+```{r,echo = FALSE }
+answer <- "\n\nThe following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\t\")\n```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n```\nnormalized.data <- scale(data, center = TRUE, scale = TRUE)\n```\n\nFinally, the normalized data will be used to do a Principal Component Analysis (PCA):\n\n```\npca <- princomp(normalized.data)\n```"
+print (answer)
+
+```
