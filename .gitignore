@@ -7,3 +7,5 @@
 .Rdata
 .httr-oauth
 .quarto
+docs
+inst/doc
