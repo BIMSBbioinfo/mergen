@@ -9,7 +9,7 @@ setupAgent(URL, task, model, ai_api_key, authorization_name)
 \arguments{
 \item{URL}{base url for LLM you wish to use}
 
-\item{task}{specific task LLM needs to complete. Syntax depends on LLM URL used.}
+\item{task}{specific task LLM needs to complete. Syntax depends on URL used.}
 
 \item{model}{model you wish to use}
 

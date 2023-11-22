@@ -36,7 +36,7 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #'
 #' This function sets up any online large language model API for tasks.
 #' @param URL base url for LLM you wish to use
-#' @param task specific task LLM needs to complete. Syntax depends on LLM URL used.
+#' @param task specific task LLM needs to complete. Syntax depends on URL used.
 #' @param model model you wish to use
 #' @param ai_api_key personal API key for accessing LLM
 #' @param authorization_name name of authorization type to be parsed to website. Depends on URL used.
