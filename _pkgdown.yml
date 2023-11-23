@@ -1,7 +1,7 @@
 url: ~
 template:
   bootstrap: 5
-  bootswatch: lux
+  bootswatch: flatly
   bslib:
     pkgdown-nav-height: 100px
 
