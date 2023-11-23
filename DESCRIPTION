@@ -17,7 +17,8 @@ Imports:
     BiocManager,
     assertthat (>= 0.2.1),
     glue,
-    httr
+    httr,
+    jsonlite
 Suggests: 
     knitr,
     readxl,
