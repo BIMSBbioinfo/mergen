@@ -87,7 +87,7 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
   final.prompt=paste(context,prompt,sep="\n")
 
   # send the prompt and get the result
-  res<-promptFunc(agent=agent, prompt=final.prompt, context=context, ...)
+  res<-promptFunc(agent=agent, prompt=final.prompt, ...)
 
   if(return.type=="text" & agent$name=="openai" ){
 
@@ -107,7 +107,7 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
 # it is used to test the selfcorrect function() and maybe used for other
 # tests
 #' @noRd
-testPrompter<-function(agent,prompt,context,...){
+testPrompter<-function(agent,prompt, ...){
 
   # Define a static variable to keep track of the count
   if (!exists("prompterCount")) {
@@ -144,7 +144,7 @@ testPrompter<-function(agent,prompt,context,...){
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
 #' @noRd
-.openai_chat<-function(agent,prompt,context,...){
+.openai_chat<-function(agent,prompt,...){
   args <- list(...)
   # for working with self-correct function
   if ("messages" %in% names(args)){
@@ -171,7 +171,7 @@ testPrompter<-function(agent,prompt,context,...){
 # now set up specifically for using with openai url or replicate url.
 # since bodies and return objects are different for these 2 websites.
 #' @noRd
-.userPrompter <- function(agent,prompt,context...){
+.userPrompter <- function(agent,prompt,...){
 
   if (grepl("openai",agent$url)){
       #setup body for openai request
@@ -209,7 +209,7 @@ testPrompter<-function(agent,prompt,context,...){
     #setup body for replicate request
     body <- list()
     body[["version"]] <- agent$model
-    body[["input"]] <- list("prompt"= prompt,"system_prompt"=context)
+    body[["input"]] <- list("prompt"= prompt)
     body[["max_new_tokens"]]<-800
 
     #send request:
