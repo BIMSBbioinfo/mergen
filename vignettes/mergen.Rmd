@@ -122,4 +122,4 @@ mergen features functions that make it easy for the user to run the code returne
 ```{r}
 executeCode(final_code$code)
 ```
-As shown above, the code runs as it should! It is important to note that the `executeCode` function will not change the global environment. Any variables that might be created while executing the code will be deleted before the function completes. 
+As shown above, the code runs as it should! It is important to note that the `executeCode` function will not change the global environment. Any variables that might be created while executing the code will be deleted as the function completes. 
