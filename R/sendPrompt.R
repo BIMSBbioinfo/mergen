@@ -166,6 +166,10 @@ testPrompter<-function(agent,prompt,context,...){
 # internal completion code for user ai
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
+# takes as arguments agent prompt and context. Agent name is userAgent
+# which is the only way to access this function via sendPrompt.
+# now set up specifically for using with openai url or replicate url.
+# since bodies and return objects are different for these 2 websites.
 #' @noRd
 .userPrompter <- function(agent,prompt,context...){
 
