@@ -144,7 +144,7 @@ testPrompter<-function(agent,prompt,context,...){
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
 #' @noRd
-.openai_chat<-function(agent,prompt, context...){
+.openai_chat<-function(agent,prompt,context,...){
   args <- list(...)
   # for working with self-correct function
   if ("messages" %in% names(args)){
