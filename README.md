@@ -14,7 +14,7 @@ valuable insights from their data effortlessly.
 
 ``` r
 # the easiest way to install mergen is via install.packages
-install.packages(mergen)
+install.packages("mergen")
 ```
 
 #### Development version

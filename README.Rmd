@@ -15,7 +15,7 @@ mergen employs artificial intelligence to convert data analysis questions into e
 ### Installation
  ```{r,eval=FALSE}
  # the easiest way to install mergen is via install.packages
- install.packages(mergen)
+ install.packages("mergen")
  ```
 
 #### Development version
