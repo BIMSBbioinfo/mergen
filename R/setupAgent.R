@@ -53,7 +53,7 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' @export
 
 
-setupAgent<-function(URL, task, model, ai_api_key, authorization_name){
+setupAgent<-function(URL, task, model, ai_api_key=Sys.getenv("AI_API_KEY"), authorization_name){
   base_url <- glue::glue("{URL}{task}")
   headers <- c(
     "Authorization" = paste(authorization_name, ai_api_key),
