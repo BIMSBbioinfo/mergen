@@ -5,20 +5,37 @@ template:
   bslib:
     pkgdown-nav-height: 100px
 
+home:
+  links:
+    - text: Browse source code
+      href: https://github.com/BIMSBbioinfo/mergen
+    - text: Report a bug
+      href: https://github.com/BIMSBbioinfo/mergen/issues
+
+
+navbar:
+  structure:
+    right: [search, github]
+  components:
+    github:
+      icon: fa-github
+      href: https://github.com/BIMSBbioinfo/mergen
+      aria-label: GitHub
+
 reference:
-- title: "Setting up an agent"
+- title: "### Setting up an agent"
   desc: >
     Functions for setting up an AI agent
   contents:
   - setupAgent
   - setupopenaiAgent
-- title: "Sending prompts"
+- title: "### Sending prompts"
   desc: >
     Functions for sending prompts to your agent
   contents:
   - sendPrompt
   - selfcorrect
-- title: "Manipulate agent's answer"
+- title: "### Manipulate agent's answer"
   desc: >
     Functions for manipulating the agents answer so code can be extracted, executed, filenames can be extracted etc. Some of these functions are internally used by others.
   contents:
