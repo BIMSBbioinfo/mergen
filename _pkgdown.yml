@@ -5,3 +5,28 @@ template:
   bslib:
     pkgdown-nav-height: 100px
 
+reference:
+- title: "Setting up an agent"
+  desc: >
+    Functions for setting up an AI agent
+  contents:
+  - setupAgent
+  - setupopenaiAgent
+- title: "Sending prompts"
+  desc: >
+    Functions for sending prompts to your agent
+  contents:
+  - sendPrompt
+  - selfcorrect
+- title: "Manipulate agent's answer"
+  desc: >
+    Functions for manipulating the agents answer so code can be extracted, executed, filenames can be extracted etc. Some of these functions are internally used by others.
+  contents:
+  - clean_code_blocks
+  - extractCode
+  - executeCode
+  - extractFilenames
+  - fileHeaderPrompt
+  - check_install
+  - extractInstallPkg
+
