@@ -1,4 +1,4 @@
-#' Setting up LLM agent
+#' Setting up openai LLM agent
 #'
 #' This function is used for the
 #' setup of the online large language model (LLM) API for subsequent tasks
@@ -32,7 +32,7 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 }
 
 
-#' setup any online  large language model (LLM) API for subsequent tasks
+#' setup any online LLM API for subsequent tasks
 #'
 #' This function sets up any online large language model API for tasks.
 #' @param URL base url for LLM you wish to use
