@@ -23,7 +23,8 @@ To get a bug fix or to use a feature from the development version, you
 can install the development version of mergen from GitHub.
 
 ``` r
-devtools::install_github()
+# install.packages("pak")
+pak::pak("BIMSBbioinfo/mergen")
 ```
 
 ### Prerequisites
@@ -83,5 +84,6 @@ Sys.setenv(AI_API_KEY = "your_key")
 ### Getting help
 
 If you encounter a clear bug, please file an issue with a minimal
-reproducible example on GitHub. There you can also post further
-questions.
+reproducible example on
+[GitHub](https://github.com/BIMSBbioinfo/mergen). There you can also
+post further questions.
