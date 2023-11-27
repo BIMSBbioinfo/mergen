@@ -60,7 +60,7 @@ OPENAI_API_KEY = "your_key"
 AI_API_KEY = "your_key"
 ```
 
-If you however wish to set this variable only for a single session, you can use on of the the following command, based on the agent you plan to use:
+If you however wish to set this variable only for a single session, you can use one of the the following commands, based on the agent you plan to use:
 
 ```{r,eval=FALSE}
 # setting up for openAI agents:
