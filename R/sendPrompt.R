@@ -7,7 +7,7 @@ rbionfoExp="Act as an expert bioformatician and R user. Answer questions using y
 
 #' Send a prompt to a specified language model agent and return the response.
 #'
-#' @param agent An object containing the agent's information (e.g., type and model).
+#' @param agent An object containing the agent's information (e.g., type and model etc.).
 #' @param prompt The prompt text to send to the language model.
 #' @param context Optional context to provide alongside the prompt (default is rbionfoExp).
 #' @param return.type The type of output to return, either the text response ("text") or the entire response object ("object").
@@ -15,7 +15,8 @@ rbionfoExp="Act as an expert bioformatician and R user. Answer questions using y
 #' @return The text response or the entire response object, based on the specified return type.
 #' @examples
 #' \dontrun{
-#' agent <- list(agent = "openai", type = "chat", model = "gpt-4", openai_api_key = "your_api_key")
+#' agent <- setupAgent(name="openai",type="chat",model="gpt-4",
+#'                     ai_api_key=Sys.getenv("OPENAI_API_KEY"))
 #' prompt <- "tell me a joke"
 #' response <- sendPrompt(agent, prompt)
 #'
@@ -29,20 +30,10 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
 
   # argument validation
   #-----------------------------------------------------------------------------
-
-  if(agent$name=="openai"){
-    assertthat::assert_that(
-      assertthat::`%has_name%`(agent,c("name","model","type","openai_api_key")),
-      assertthat::noNA(agent)
-    )
-  }
-
-  if(agent$name=="userAgent"){
-    assertthat::assert_that(
-      assertthat::`%has_name%`(agent,c("name","model","url","headers","ai_api_key")),
-      assertthat::noNA(agent)
-    )
-  }
+  assertthat::assert_that(
+    assertthat::`%has_name%`(agent,c("name","model","API","url","headers","ai_api_key","type")),
+    assertthat::noNA(agent)
+  )
 
   assertthat::assert_that(
     assertthat::is.string(prompt),
@@ -63,44 +54,39 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
 
   # -------------------------------------------------------------------------------------
 
-  # define the prompt function based on openai
-  if(agent$name=="openai"){
-
-    if(agent$type=="chat"){
-      # TODO may need to wrap this up to higher function to unify access
-      # to promptFunc
-      promptFunc=.openai_chat
-
-    }else if(agent$type=="completion"){
-      promptFunc=.openai_comp
-    }
-
-  }else if(agent$name=="testAgent"){
+  if(agent$name=="testAgent"){
     promptFunc=testPrompter
   }else if(agent$name=="userAgent"){
-    promptFunc=.userPrompter
+    if (agent$API == "openai"){
+      if (agent$type=="completion"){
+        promptFunc = .openai_comp
+      }else if (agent$type =="chat"){
+        promptFunc = .openai_chat
+      }else{
+        stop (cat("Agent type", agent$type ,"is not compatiable with the current setup"))
+      }
+    }else if (agent$API == "replicate"){
+      promptFunc = .replicate_chat
+    }else{
+      stop(cat("the specified API",agent$API,"is not compatiable with the current setup"))
+    }
   }else{
     stop("the specified LLM agent is not compatiable with the current setup")
   }
 
+  # send the prompt and get the result
+  if (return.type != "text" & return.type !="object"){
+    stop (cat("Return type",return.type,"not supported"))
+  }
+
+
   # build the prompt with context if exists
   final.prompt=paste(context,prompt,sep="\n")
 
-  # send the prompt and get the result
-  res<-promptFunc(agent=agent, prompt=final.prompt, ...)
 
-  if(return.type=="text" & agent$name=="openai" ){
+  res<-promptFunc(agent=agent, prompt=final.prompt, return.type=return.type, ...)
 
-    if(agent$type=="chat"){
-      return(res$choices[1,4])
-
-    }else if(agent$type=="completion"){
-      return(res$choices[1,1])
-    }
-  }else{
-    return(res)
-  }
-
+  return (res)
 }
 
 # this function returns three responses one after another
@@ -134,83 +120,56 @@ testPrompter<-function(agent,prompt, ...){
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
 #' @noRd
-.openai_comp<-function(agent,...){
-
-  openai::create_completion(model=agent$model,
-             openai_api_key = agent$openai_api_key, ...)
+.openai_comp<-function(agent, return.type, prompt,...){
+  res <- openai::create_completion(model=agent$model,
+             openai_api_key = agent$ai_api_key,
+             prompt=prompt,...)
+  if (return.type == "text"){
+    return (res$choices$text)
+  }else{
+    return(res)
+  }
 }
 
 # internal completion code for open ai
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
 #' @noRd
-.openai_chat<-function(agent,prompt,...){
+.openai_chat<-function(agent,prompt,return.type,...){
   args <- list(...)
   # for working with self-correct function
   if ("messages" %in% names(args)){
-    openai::create_chat_completion(model=agent$model,
+    res <- openai::create_chat_completion(model=agent$model,
                                    messages=args$messages,
-                                   openai_api_key = agent$openai_api_key)
+                                   openai_api_key = agent$ai_api_key)
   }else{
-    openai::create_chat_completion(model=agent$model,
+    res <- openai::create_chat_completion(model=agent$model,
                                    messages=list(
                                      list(
                                        "role" = "user",
                                        "content" = prompt
                                      )),
-                                   openai_api_key = agent$openai_api_key,
+                                   openai_api_key = agent$ai_api_key,
                                    ...)
   }
+  if (return.type=="text"){
+    return (res$choices[1,4])
+  }else(
+    return(res)
+  )
 }
 
-# internal completion code for user ai
+# internal completion code for replicate AI
 # hides specific stuff so that promptFunc works in a unified way
-# across agents
-# takes as arguments agent prompt and context. Agent name is userAgent
-# which is the only way to access this function via sendPrompt.
-# now set up specifically for using with openai url or replicate url.
-# since bodies and return objects are different for these 2 websites.
+# across agents.
 #' @noRd
-.userPrompter <- function(agent,prompt,...){
-
-  if (grepl("openai",agent$url)){
-      #setup body for openai request
-      body <- list()
-      body[["model"]] <- agent$model
-      body[["messages"]] <- list(list("role"="user","content"=prompt))
-      body[["user"]] <- NULL
-      body[["temperature"]] <- 1
-      body[["top_p"]] <- 1
-      body[["n"]] <- 1
-      body[["stream"]] <- FALSE
-      body[["stop"]] <- NULL
-      body[["max_tokens"]] <- NULL
-      body[["presence_penalty"]] <- 0
-      body[["frequency_penalty"]] <- 0
-      body[["logit_bias"]] <- NULL
-
-    # send request
-    response <- httr::POST(
-      url = agent$url,
-      httr::add_headers(.headers = agent$headers),
-      body = body,
-      encode = "json"
-    )
-
-    # parse request
-    parsed <- response %>%
-      httr::content(as = "text", encoding = "UTF-8") %>%
-      jsonlite::fromJSON(flatten = TRUE)
-
-    return(parsed$choices[1,4])
-
-  }else if (grepl("replicate",agent$url)){
+.replicate_chat <- function(agent,prompt,return.type,...){
 
     #setup body for replicate request
     body <- list()
     body[["version"]] <- agent$model
     body[["input"]] <- list("prompt"= prompt)
-    body[["max_new_tokens"]]<-800
+    body[["max_new_tokens"]]<-Inf
 
     #send request:
     posted <- httr::POST(
@@ -225,6 +184,12 @@ testPrompter<-function(agent,prompt, ...){
       httr::content(as = "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)
 
+    # if for some reason request did not go through
+    if (!exists("parsed_post$urls$get")){
+      print (parsed_post)
+      stop ("Request failed.")
+    }
+
     #fetch status and parse
     respons <- httr::GET(
       url = parsed_post$urls$get,
@@ -235,7 +200,7 @@ testPrompter<-function(agent,prompt, ...){
       httr::content(as = "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)
 
-    # If not yet finished request again untill finished
+    # If not yet finished request again until finished
     while (parsed_get$status!= "succeeded"){
       #fetch response and parse
       respons <- httr::GET(
@@ -247,14 +212,17 @@ testPrompter<-function(agent,prompt, ...){
         httr::content(as = "text", encoding = "UTF-8") %>%
         jsonlite::fromJSON(flatten = TRUE)
       # pause .2 sec until next request
-      Sys.sleep(.2)
+      Sys.sleep(0.2)
     }
 
-    # flatten response
-    response<-c()
-    for (i in parsed_get$output){
-      response <- paste0(response,i)
+    # flatten response when return is text. Otherwise return object
+    if (return.type == "text"){
+      response<-c()
+      for (i in parsed_get$output){
+        response <- paste0(response,i)
+      }
+      return(response)
+    }else{
+      return (parsed_get)
     }
-    return(response)
-  }
 }
