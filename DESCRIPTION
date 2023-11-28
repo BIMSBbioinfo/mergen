@@ -16,7 +16,6 @@ Imports:
     rmarkdown,
     BiocManager,
     assertthat (>= 0.2.1),
-    glue,
     httr,
     jsonlite
 Suggests: 

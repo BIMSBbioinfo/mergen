@@ -2,20 +2,23 @@
 % Please edit documentation in R/setupAgent.R
 \name{setupAgent}
 \alias{setupAgent}
-\title{setup any online  large language model (LLM) API for subsequent tasks}
+\title{setup any online LLM API for subsequent tasks}
 \usage{
-setupAgent(URL, task, model, ai_api_key, authorization_name)
+setupAgent(
+  name = c("openai", "replicate"),
+  type = NULL,
+  model,
+  ai_api_key = Sys.getenv("AI_API_KEY")
+)
 }
 \arguments{
-\item{URL}{base url for LLM you wish to use}
+\item{name}{Name of the API you want to use. Currently supported APIs are "openai" and "replicate"}
 
-\item{task}{specific task LLM needs to complete. Syntax depends on URL used.}
+\item{type}{Specify type of model (chat or completion). This parameter only needs to be specified when using 'openai}
 
-\item{model}{model you wish to use}
+\item{model}{LLM model you wish to use.}
 
 \item{ai_api_key}{personal API key for accessing LLM}
-
-\item{authorization_name}{name of authorization type to be parsed to website. Depends on URL used.}
 }
 \description{
 This function sets up any online large language model API for tasks.

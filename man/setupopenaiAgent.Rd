@@ -2,7 +2,7 @@
 % Please edit documentation in R/setupAgent.R
 \name{setupopenaiAgent}
 \alias{setupopenaiAgent}
-\title{Setting up LLM agent}
+\title{Setting up openai LLM agent}
 \usage{
 setupopenaiAgent(
   model,
