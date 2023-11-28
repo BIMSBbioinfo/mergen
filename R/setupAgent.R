@@ -32,7 +32,7 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 }
 
 
-#' set up  online LLM API for subsequent tasks
+#' set up an online LLM API for subsequent tasks
 #'
 #' This function sets up an large language model API for tasks.
 #' @param name Name of the API you want to use. Currently supported APIs are "openai" and "replicate"
@@ -42,12 +42,9 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #'
 #' @examples
 #' \dontrun{
-#' myAgent <- setupAgent (URL="https://api.replicate.com/v1/", task = "predictions",
-#' model="02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
-#' ai_api_key=Sys.getenv("API_KEY"), authorization_name = "Token")
-#' myAgent <- setupAgent (URL="https://api.openai.com/v1/", task = "chat/completions",
-#' model="gtp-4",
-#' ai_api_key=Sys.getenv("API_KEY"), authorization_name = "Bearer")
+#' myAgent <- setupAgent(name="openai",type="chat",model="gpt-4",ai_api_key=Sys.getenv("AI_API_KEY"))
+#'
+#' myAgent <- setupAgent(name="replicate",type=NULL,model="llama-2-70b-chat",ai_api_key=Sys.getenv("AI_API_KEY"))
 #' }
 #' @export
 
