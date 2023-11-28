@@ -12,7 +12,7 @@
 #' \dontrun{
 #' agent=setupopenaiAgent(model="text-davinci-003",type="completion", openai_api_key="")
 #' }
-#' @export
+#' @noRd
 setupopenaiAgent<-function(model,type=c("chat","completion"),
                            openai_api_key= Sys.getenv("OPENAI_API_KEY"),
                            openai_organization = NULL
@@ -35,11 +35,10 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' setup any online LLM API for subsequent tasks
 #'
 #' This function sets up any online large language model API for tasks.
-#' @param URL base url for LLM you wish to use
-#' @param task specific task LLM needs to complete. Syntax depends on URL used.
-#' @param model model you wish to use
+#' @param name Name of the API you want to use. Currently supported APIs are "openai" and "replicate"
+#' @param type Specify type of model (chat or completion). This parameter only needs to be specified when using 'openai
+#' @param model LLM model you wish to use.
 #' @param ai_api_key personal API key for accessing LLM
-#' @param authorization_name name of authorization type to be parsed to website. Depends on URL used.
 #'
 #' @examples
 #' \dontrun{
@@ -53,12 +52,34 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' @export
 
 
-setupAgent<-function(URL, task, model, ai_api_key=Sys.getenv("AI_API_KEY"), authorization_name){
-  base_url <- glue::glue("{URL}{task}")
-  headers <- c(
-    "Authorization" = paste(authorization_name, ai_api_key),
-    "Content-Type" = "application/json")
-  return(list(name="userAgent",url=base_url, model=model, headers=headers,ai_api_key=ai_api_key))
+setupAgent<-function(name=c("openai","replicate"), type=NULL, model, ai_api_key=Sys.getenv("AI_API_KEY")){
+  if (name =="replicate"){
+    if (!is.null(type)){
+      warning ("Type cannot be specified when using replicate. This will be ignored.")
+      type=NULL
+    }
+    base_url = "https://api.replicate.com/v1/predictions"
+    headers <- c(
+      "Authorization" = paste("Token", ai_api_key),
+      "Content-Type" = "application/json")
+  }else if(name == "openai"){
+    if (is.null(type) | (type!="chat" & type!="completion")){
+      stop("Please specify a type: chat or completion")
+    }
+    if (type=="chat"){
+      base_url ="https://api.openai.com/v1/chat/completions"
+    }else if (type=="completion"){
+      base_url ="https://api.openai.com/v1/completions"
+    }else{
+      stop (cat("Type",type,"not supported"))
+    }
+    headers <- c(
+      "Authorization" = paste("Bearer", ai_api_key),
+      "Content-Type" = "application/json")
+  }else {
+    stop (cat("Chosen API",name, "not supported."))
+  }
+  return(list(name = "userAgent",type=type,API=name, url=base_url, model=model, headers=headers,ai_api_key=ai_api_key))
 }
 
 
