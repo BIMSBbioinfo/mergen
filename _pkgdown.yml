@@ -25,10 +25,9 @@ navbar:
 reference:
 - title: "### Setting up an agent"
   desc: >
-    Functions for setting up an AI agent
+    Function for setting up an AI agent
   contents:
   - setupAgent
-  - setupopenaiAgent
 - title: "### Sending prompts"
   desc: >
     Functions for sending prompts to your agent

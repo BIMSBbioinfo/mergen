@@ -24,7 +24,7 @@ This document introduces you to mergen's basic set of tools, and shows you how t
 to answer data analysis related questions and generate relevant R code. 
 
 ### setting up an AI-agent
-To be able to interact with an AI agent and use this agent for subsequent tasks, mergen contains two functions for setting up a framework for the agent. Which function to use, depends on the AI agent you want to use. Mergen allows you to set up an agent for the openai API platform, but also other platforms that behave similarly.
+To be able to interact with an AI agent and use this agent for subsequent tasks, mergen contains two functions for setting up a framework for the agent. Which function to use, depends on the AI agent you want to use. Mergen allows you to set up an agent for the openai API platform as well as for the replicate API platform. 
 
 #### setting up an openai agent
 For setting up an agent for the openai API platform, you can make use of the `setupAgent` function.
@@ -37,8 +37,8 @@ myAgent
 
 the `setupAgent` function returns a list containing all the agent information which is can be used by subsequent functions. Important to note is that the ai_api_key should contain your openai API key, given as a string. 
 
-#### setting up an agent for other replicate
-`setupAgent` also contains functionality for setting up an agent for replicate AIs. Let's look at how we then use this function:
+#### setting up an agent for replicate
+`setupAgent` also contains functionality for setting up an agent for replicate AIs. Let's look at how: 
 
 ```{r}
 myAgent <- setupAgent(name="replicate",type=NULL,model="llama-2-70b-chat",ai_api_key="my_key")
