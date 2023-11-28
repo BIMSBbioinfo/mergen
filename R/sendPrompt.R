@@ -184,8 +184,10 @@ testPrompter<-function(agent,prompt, ...){
       httr::content(as = "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)
 
+
+
     # if for some reason request did not go through
-    if (!exists("parsed_post$urls$get")){
+    if (!parsed_post$status =="starting"){
       print (parsed_post)
       stop ("Request failed.")
     }
