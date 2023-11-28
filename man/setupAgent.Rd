@@ -2,7 +2,7 @@
 % Please edit documentation in R/setupAgent.R
 \name{setupAgent}
 \alias{setupAgent}
-\title{setup any online LLM API for subsequent tasks}
+\title{set up  online LLM API for subsequent tasks}
 \usage{
 setupAgent(
   name = c("openai", "replicate"),
@@ -21,7 +21,7 @@ setupAgent(
 \item{ai_api_key}{personal API key for accessing LLM}
 }
 \description{
-This function sets up any online large language model API for tasks.
+This function sets up an large language model API for tasks.
 }
 \examples{
 \dontrun{

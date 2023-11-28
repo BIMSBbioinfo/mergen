@@ -32,9 +32,9 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 }
 
 
-#' setup any online LLM API for subsequent tasks
+#' set up  online LLM API for subsequent tasks
 #'
-#' This function sets up any online large language model API for tasks.
+#' This function sets up an large language model API for tasks.
 #' @param name Name of the API you want to use. Currently supported APIs are "openai" and "replicate"
 #' @param type Specify type of model (chat or completion). This parameter only needs to be specified when using 'openai
 #' @param model LLM model you wish to use.
