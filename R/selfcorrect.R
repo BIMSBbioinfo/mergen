@@ -28,14 +28,10 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
 
   #---------------------------------------------------------------------------
   # Validate arguments
-
-  if (agent$name=="openai"){
-    assertthat::assert_that(
-      assertthat::`%has_name%`(agent,c("name","model","type","openai_api_key")),
-      assertthat::noNA(agent)
-    )
-  }
-
+  assertthat::assert_that(
+    assertthat::`%has_name%`(agent,c("name","model","API","url","headers","ai_api_key","type")),
+    assertthat::noNA(agent)
+  )
 
   assertthat::assert_that(
     assertthat::is.string(prompt),
@@ -58,6 +54,12 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
     )
   }
   #------------------------------------------------------------------------------------------
+  if (agent$API =="openai"){
+    if (agent$type == "completion"){
+      stop ("selfcorrect cannot be used with type completion. Can only be used with type chat.")
+    }
+    }
+
   # send prompt
   response <- sendPrompt(agent,prompt,context,return.type="text",...)
 
@@ -102,10 +104,6 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   # set up the on of the final variables that will be returned in the end
   codeWorks=FALSE
 
-  # create temporary agent with chat completion for attempts
-  temp_agent <- agent
-  temp_agent$type <- "chat"
-
   # execute the code up to "attempts" times
   for(i in 1:attempts){
 
@@ -134,7 +132,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
 
       # send prompt
       msgs<-append(msgs,list(list("role" = "user","content" = new.prompt)))
-      response <- sendPrompt(agent=temp_agent, prompt="",return.type = "text",messages=msgs)
+      response <- sendPrompt(agent=agent, prompt=paste(response,promptAddon), return.type = "text",messages=msgs)
       msgs<-append(msgs,list(list("role" = "assistant","content" = response)))
 
       # clean code from wrong backticks
