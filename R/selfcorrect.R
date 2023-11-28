@@ -75,6 +75,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
 
   # check if any code is returned
   if(blocks$code==""){
+    print(response)
     stop("no code returned")
 
   }
