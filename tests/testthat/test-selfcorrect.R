@@ -1,12 +1,10 @@
 testthat::test_that("A bot can self-correct",{
-  myAgent <- list(name="testAgent",model="nomodel",type="chat",openai_api_key="none")
+  myAgent <- list(name="testAgent",model="nomodel",API="noAPI",headers="noheaders",ai_api_key="none",type="notypes",url="nourl")
   res<-selfcorrect(myAgent,"Do I have a question?",attempts = 3)
   expect_equal(res$final.blocks$code, "\nplot(1:10)")
   expect_equal (res$final.response, "\n\nThe third response.The following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\nplot(1:10)```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n")
   expect_equal(res$init.response, "\n\nThe following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\t\")\n```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n```\nnormalized.data <- scale(data, center = TRUE, scale = TRUE)\n```\n\nFinally, the normalized data will be used to do a Principal Component Analysis (PCA):\n\n```\npca <- princomp(normalized.data)\n```")
 })
-
-
 
 test_argument_validation(
   function_name = "selfcorrect",
