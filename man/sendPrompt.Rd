@@ -13,7 +13,7 @@ sendPrompt(
 )
 }
 \arguments{
-\item{agent}{An object containing the agent's information (e.g., type and model).}
+\item{agent}{An object containing the agent's information (e.g., type and model etc.).}
 
 \item{prompt}{The prompt text to send to the language model.}
 
@@ -31,7 +31,8 @@ Send a prompt to a specified language model agent and return the response.
 }
 \examples{
 \dontrun{
-agent <- list(agent = "openai", type = "chat", model = "gpt-4", openai_api_key = "your_api_key")
+agent <- setupAgent(name="openai",type="chat",model="gpt-4",
+                    ai_api_key=Sys.getenv("OPENAI_API_KEY"))
 prompt <- "tell me a joke"
 response <- sendPrompt(agent, prompt)
 
