@@ -7,13 +7,13 @@
 executeCode(code, output = "eval", output.file = NULL)
 }
 \arguments{
-\item{code}{code chunk as text, without any decoraters or HTML specific characters}
+\item{code}{code chunk as text, without any decorators or HTML-specific characters.}
 
-\item{output}{if the output is "eval" the code is executed as is if the output is "html"
-the code is not executed}
+\item{output}{If the output is "eval", the code is executed as is. If the output is "html",
+the code is not executed.}
 
-\item{output.file}{if the output is "html" user can provide a file name for the html,
-if not provided a temporary file will be created}
+\item{output.file}{If the output is "html", user can provide a file name for the html.
+If not provided a temporary file will be created.}
 }
 \description{
 The function executes a chunk of code either in the current working environment

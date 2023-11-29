@@ -3,11 +3,11 @@
 #' The function executes a chunk of code either in the current working environment
 #' or saves the output as an HTML file to be rendered as a part of a web page
 #'
-#' @param code code chunk as text, without any decoraters or HTML specific characters
-#' @param output if the output is "eval" the code is executed as is if the output is "html"
-#'               the code is not executed
-#' @param output.file if the output is "html" user can provide a file name for the html,
-#'                  if not provided a temporary file will be created
+#' @param code code chunk as text, without any decorators or HTML-specific characters.
+#' @param output If the output is "eval", the code is executed as is. If the output is "html",
+#'               the code is not executed.
+#' @param output.file If the output is "html", user can provide a file name for the html.
+#'                  If not provided a temporary file will be created.
 #'
 #' @export
 executeCode <- function(code, output = "eval",
