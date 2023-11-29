@@ -14,8 +14,9 @@ valuable insights from their data effortlessly.
 
 ### Installation
 
+The easiest way to install mergen is via `install.packages`
+
 ``` r
-# the easiest way to install mergen is via install.packages
 install.packages("mergen")
 ```
 
@@ -32,7 +33,9 @@ pak::pak("BIMSBbioinfo/mergen")
 ### Prerequisites
 
 - Make an AI account
-- Create an AI API key to use with the package
+- [Create an OpenAI API
+  key](https://platform.openai.com/account/api-keys) to use with the
+  package
 - Set up the API key in R
 
 #### Configuring your AI API key
@@ -60,18 +63,20 @@ edit_r_environ(scope="project")
 ```
 
 For a persistent loading of your API key, add the following line to your
-.Renviron file replacing “your_key” with your key.
+.Renviron file replacing `"your_key"` with your key.
 
 ``` r
-# setting up your key
 AI_API_KEY="your_key"
 ```
+
+**NOTE:** After setting up your API key in the .Renviron file, either
+restart the R session or run `readRenviron(".Renviron")` to apply the
+changes.
 
 If you however wish to set this variable only for a single session, you
 can use the following command:
 
 ``` r
-# setting up your key for one session
 Sys.setenv(AI_API_KEY="your_key")
 ```
 
