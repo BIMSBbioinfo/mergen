@@ -63,6 +63,7 @@ setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api
       "Authorization" = paste("Token", ai_api_key),
       "Content-Type" = "application/json")
     if (is.null(model)){
+      warning ("No model given. Model will be set to llama-2-70b-chat")
       model = "02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3"
     }
   }else if(name == "openai"){
