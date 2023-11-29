@@ -1,4 +1,6 @@
 
+# mergen <img src="man/figures/mergen_logo.png" align="right" height="200" style="float:right; height:200px;"/>
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ### Overview
