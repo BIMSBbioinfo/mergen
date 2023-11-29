@@ -51,7 +51,7 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 
 setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api_key=Sys.getenv("AI_API_KEY")){
   if (ai_api_key==""){
-    stop("No API key provided. Please set this as a string or load AI_API_KEY into your system environment.")
+    stop("Invalid API key provided. Please set this as a string or load AI_API_KEY into your system environment.")
   }
   if (name =="replicate"){
     if (!is.null(type)){
