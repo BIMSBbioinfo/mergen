@@ -64,7 +64,7 @@ executeCode <- function(code, output = "eval",
       message("HTML file created at:", output.file,"\n")
       message("wdir is:", wd,"\n")
 
-      # produce html fragment
+      # Produce html fragment
       rmarkdown::render(temp_file, output_file = output.file,
                         knit_root_dir=wd,
                         output_format=rmarkdown::output_format(
@@ -89,10 +89,10 @@ executeCode <- function(code, output = "eval",
     })
   }
 
-  # create the error holder
+  # Create the error holder
   err<-list() # error and warning list
 
-  # evalue the expression
+  # Evaluate the expression
   res<-tryCatch(
     withCallingHandlers(
       {
