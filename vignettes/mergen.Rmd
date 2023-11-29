@@ -98,7 +98,7 @@ Once you have sent a prompt, and recieved the answer, mergen features a function
 
 ```{r}
 code_cleaned <- clean_code_blocks(answer$final.response)
-print(code_cleaned)
+cat(code_cleaned)
 ```
 
 As you can see above, `clean_code_blocks` ensures that all code is stripped from extra symbols such as {r}, R, r and {R}. This ensures that the function `extractCode` can extract the code blocks properly. The `extractCode` function takes as input a string, and also allows the user to set a delimiter used to enclose the code blocks (default is three backtics). Now lets have a look at what the `extractCode` function returns:
