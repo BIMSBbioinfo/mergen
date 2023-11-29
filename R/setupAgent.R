@@ -49,7 +49,10 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' @export
 
 
-setupAgent<-function(name=c("openai","replicate"), type=NULL, model, ai_api_key=Sys.getenv("AI_API_KEY")){
+setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api_key=Sys.getenv("AI_API_KEY")){
+  if (ai_api_key==""){
+    stop("No API key provided. Please set this as a string or load AI_API_KEY into your system environment.")
+  }
   if (name =="replicate"){
     if (!is.null(type)){
       warning ("Type cannot be specified when using replicate. This will be ignored.")
@@ -59,14 +62,26 @@ setupAgent<-function(name=c("openai","replicate"), type=NULL, model, ai_api_key=
     headers <- c(
       "Authorization" = paste("Token", ai_api_key),
       "Content-Type" = "application/json")
+    if (is.null(model)){
+      model = "02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3"
+    }
   }else if(name == "openai"){
-    if (is.null(type) | (type!="chat" & type!="completion")){
-      stop("Please specify a type: chat or completion")
+    if (is.null(type)){
+      warning("No type selected. Will set type to chat")
+      type="chat"
     }
     if (type=="chat"){
       base_url ="https://api.openai.com/v1/chat/completions"
+      if (is.null(model)){
+        warning ("No model selected. Model will be set to gtp-3.5-turbo.")
+        model = "gtp-3.5-turbo"
+      }
     }else if (type=="completion"){
       base_url ="https://api.openai.com/v1/completions"
+      if (is.null(model)){
+        warning ("No model selected. Model will be set to text-curie-001.")
+        model = "text-curie-001"
+      }
     }else{
       stop (cat("Type",type,"not supported"))
     }
