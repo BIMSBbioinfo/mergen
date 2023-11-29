@@ -1,4 +1,4 @@
-#' extract the code and text from from the text returned by LLM agent
+#' extract the code and text from the text returned by LLM agent
 #'
 #' The function parses the code and can return the text and code as single blocks
 #' This good for execution and might be useful for displaying purposes later on.
@@ -19,7 +19,7 @@
 #' @export
 extractCode<-function(text,delimiter="```"){
 
-  # argument validation
+  # Argument validation
   # -----------------------------------------------------------------------------
   assertthat::assert_that(
     assertthat::is.string(text),
@@ -35,15 +35,15 @@ extractCode<-function(text,delimiter="```"){
   # Split the text by the delimiter
   parts <- strsplit(text, delimiter, fixed = TRUE)[[1]]
 
-  # get matches to delimiter
+  # Get matches to delimiter
   mloc<-gregexpr(delimiter,text,fixed=T)[[1]]
-  mdf<-cbind(mloc[-length(mloc)],mloc[-1]) # create a df with matches
+  mdf<-cbind(mloc[-length(mloc)],mloc[-1]) # Create a df with matches
 
   if(nrow(mdf)>1){
-    mdf <- mdf[-seq(2, nrow(mdf), 2),, drop=FALSE ] # remove incorrect blocks
+    mdf <- mdf[-seq(2, nrow(mdf), 2),, drop=FALSE ] # Remove incorrect blocks
   }
 
-  # extract code blocks
+  # Extract code blocks
   code_blocks<-mapply(function(x,y) substr(text,x,y), mdf[,1]+3,mdf[,2]-1)
 
   # Concatenate the code blocks and remaining text

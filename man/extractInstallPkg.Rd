@@ -16,7 +16,7 @@ and installs them as needed.
 }
 \examples{
 \dontrun{
-# check code for packages that need installing
+# Check code for packages that need installing
 extractInstallPkg(code)
 }
 

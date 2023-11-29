@@ -1,6 +1,6 @@
 
 
-# send prompt to an agent and get a response
+# Send prompt to an agent and get a response
 
 rbionfoExp="Act as an expert bioformatician and R user. Answer questions using your expertise. When providing code provide the code in triple backtics and as a single block."
 
@@ -28,7 +28,7 @@ rbionfoExp="Act as an expert bioformatician and R user. Answer questions using y
 sendPrompt<-function(agent,prompt,context=rbionfoExp,
                      return.type=c("text","object"),...){
 
-  # argument validation
+  # Argument validation
   #-----------------------------------------------------------------------------
   assertthat::assert_that(
     assertthat::`%has_name%`(agent,c("name","model","API","url","headers","ai_api_key","type")),
@@ -63,24 +63,24 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
       }else if (agent$type =="chat"){
         promptFunc = .openai_chat
       }else{
-        stop (cat("Agent type", agent$type ,"is not compatiable with the current setup"))
+        stop (cat("Agent type", agent$type ,"is not compatible with the current setup"))
       }
     }else if (agent$API == "replicate"){
       promptFunc = .replicate_chat
     }else{
-      stop(cat("the specified API",agent$API,"is not compatiable with the current setup"))
+      stop(cat("The specified API",agent$API,"is not compatible with the current setup"))
     }
   }else{
-    stop("the specified LLM agent is not compatiable with the current setup")
+    stop("The specified LLM agent is not compatible with the current setup")
   }
 
-  # send the prompt and get the result
+  # Send the prompt and get the result
   if (return.type != "text" & return.type !="object"){
     stop (cat("Return type",return.type,"not supported"))
   }
 
 
-  # build the prompt with context if exists
+  # Build the prompt with context if exists
   final.prompt=paste(context,prompt,sep="\n")
 
 
@@ -89,8 +89,8 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
   return (res)
 }
 
-# this function returns three responses one after another
-# it is used to test the selfcorrect function() and maybe used for other
+# This function returns three responses one after another
+# It is used to test the selfcorrect function() and maybe used for other
 # tests
 #' @noRd
 testPrompter<-function(agent,prompt, ...){
@@ -104,7 +104,7 @@ testPrompter<-function(agent,prompt, ...){
 
   prompterCount  <<- prompterCount  + 1
 
-  # list of responses where it gradually gets the correct code
+  # List of responses where it gradually gets the correct code
   botResponses=list(
     "\n\nThe following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\ndata <- read.table(\"test.txt\", header = TRUE, sep = \"\\t\")\n```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n```\nnormalized.data <- scale(data, center = TRUE, scale = TRUE)\n```\n\nFinally, the normalized data will be used to do a Principal Component Analysis (PCA):\n\n```\npca <- princomp(normalized.data)\n```",
 
@@ -116,7 +116,7 @@ testPrompter<-function(agent,prompt, ...){
   return(botResponses[[prompterCount]])
 }
 
-# internal completion code for open ai
+# Internal completion code for open ai
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
 #' @noRd
@@ -131,13 +131,13 @@ testPrompter<-function(agent,prompt, ...){
   }
 }
 
-# internal completion code for open ai
+# Internal completion code for open ai
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
 #' @noRd
 .openai_chat<-function(agent,prompt,return.type,...){
   args <- list(...)
-  # for working with self-correct function
+  # For working with self-correct function
   if ("messages" %in% names(args)){
     res <- openai::create_chat_completion(model=agent$model,
                                    messages=args$messages,
@@ -159,13 +159,13 @@ testPrompter<-function(agent,prompt, ...){
   )
 }
 
-# internal completion code for replicate AI
+# Internal completion code for replicate AI
 # hides specific stuff so that promptFunc works in a unified way
 # across agents.
 #' @noRd
 .replicate_chat <- function(agent,prompt,return.type,...){
 
-    #setup body for replicate request
+    # Setup body for replicate request
     body <- list()
     body[["version"]] <- agent$model
     body[["input"]] <- list("prompt"= prompt)
@@ -179,20 +179,20 @@ testPrompter<-function(agent,prompt, ...){
       encode = "json"
     )
 
-    #parse response to retrieve url needed for fetching response
+    # Parse response to retrieve url needed for fetching response
     parsed_post <- posted %>%
       httr::content(as = "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)
 
 
 
-    # if for some reason request did not go through
+    # If for some reason request did not go through
     if (!parsed_post$status =="starting"){
       print (parsed_post)
       stop ("Request failed.")
     }
 
-    #fetch status and parse
+    # Fetch status and parse
     respons <- httr::GET(
       url = parsed_post$urls$get,
       httr::add_headers(.headers = agent$headers )
@@ -204,7 +204,7 @@ testPrompter<-function(agent,prompt, ...){
 
     # If not yet finished request again until finished
     while (parsed_get$status!= "succeeded"){
-      #fetch response and parse
+      # Fetch response and parse
       respons <- httr::GET(
         url = parsed_post$urls$get,
         httr::add_headers(.headers = agent$headers )
@@ -213,11 +213,11 @@ testPrompter<-function(agent,prompt, ...){
       parsed_get <- respons %>%
         httr::content(as = "text", encoding = "UTF-8") %>%
         jsonlite::fromJSON(flatten = TRUE)
-      # pause .2 sec until next request
+      # Pause .2 sec until next request
       Sys.sleep(0.2)
     }
 
-    # flatten response when return is text. Otherwise return object
+    # Flatten response when return is text. Otherwise return object
     if (return.type == "text"){
       response<-c()
       for (i in parsed_get$output){
