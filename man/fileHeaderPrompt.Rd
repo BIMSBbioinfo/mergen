@@ -10,7 +10,7 @@ fileHeaderPrompt(filenames)
 \item{filenames}{list containing filenames mentioned in prompt}
 }
 \description{
-This function extracts file headers  from
+This function extracts file headers from
 files mentioned in user prompts.
 }
 \examples{

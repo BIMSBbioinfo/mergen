@@ -50,14 +50,14 @@ check_install<-function(package_name){
 #' @param code code block returned by the agent.
 #' @examples
 #' \dontrun{
-#' # check code for packages that need installing
+#' # Check code for packages that need installing
 #' extractInstallPkg(code)
 #' }
 #'
 #' @export
 extractInstallPkg<-function(code){
 
-  # argument validation
+  # Argument validation
   # -----------------------------------------------------------------------------
   assertthat::assert_that(
     assertthat::is.string(code),
@@ -68,13 +68,13 @@ extractInstallPkg<-function(code){
   # Split the code into separate lines
   code_lines <- strsplit(code, "\n")[[1]]
 
-  # for each line look for library call and install things if not installed
+  # For each line look for library call and install things if not installed
   for(a in 1:length(code_lines)){
 
     if(grepl("library\\(", code_lines[a])){
       new_code <- gsub("library\\((.*)\\)", "check_install('\\1')", code_lines[a])
       message("trying to install ",new_code,"\n")
-      eval(str2expression(new_code)) # execute install code
+      eval(str2expression(new_code)) # Execute install code
 
     }
   }

@@ -1,6 +1,6 @@
 #' Extract file headers from files in prompt
 #'
-#' This function extracts file headers  from
+#' This function extracts file headers from
 #' files mentioned in user prompts.
 #' @param filenames list containing filenames mentioned in prompt
 #'
@@ -25,7 +25,7 @@ fileHeaderPrompt<-function(filenames){
       data_string <- apply(data, 1, function(row) paste(row, collapse = "\t"))
       data_string <- paste(data_string, collapse = "\n")
 
-      # add header
+      # Add header
       header<-paste(colnames(data),collapse = "\t")
       data_string<-paste0(header,"\n",data_string)
 

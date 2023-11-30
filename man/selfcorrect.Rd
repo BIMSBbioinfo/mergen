@@ -20,7 +20,7 @@ selfcorrect(
 
 \item{context}{Optional context to provide alongside the prompt (default is rbionfoExp).}
 
-\item{attempts}{numeric value denoting how many times the code should be sent back for fixing.}
+\item{attempts}{Numeric value denoting how many times the code should be sent back for fixing.}
 
 \item{output.file}{Optional output file created holding parsed code}
 

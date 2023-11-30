@@ -33,25 +33,25 @@ test_that("invalid LLM gives error",{
 
 
 test_that("userAgent needs to have all correct fields",{
-  # no name
+  # No name
   agent <- list(model="userAgent",API="noAPI",headers="noheaders",ai_api_key="none",type="notypes",url="nourl")
   expect_error(sendPrompt(agent=agent,prompt="this is my prompt",return.type = "text"))
-  # no model
+  # No model
   agent <- list(name="userAgent", API="noAPI",headers="noheaders",ai_api_key="none",type="notypes",url="nourl")
   expect_error(sendPrompt(agent=agent,prompt="this is my prompt",return.type = "text"))
-  # no url
+  # No url
   agent <- list(name="userAgent",model="nomodel",API="noAPI",headers="noheaders",ai_api_key="none",type="notypes")
   expect_error(sendPrompt(agent=agent,prompt="this is my prompt",return.type = "text"))
-  # no headers
+  # No headers
   agent <- list(name="userAgent",model="nomodel",API="noAPI", ai_api_key="none",type="notypes",url="nourl")
   expect_error(sendPrompt(agent=agent,prompt="this is my prompt",return.type = "text"))
-  # no type
+  # No type
   agent <- list(name="userAgent",model="nomodel",API="noAPI",headers="noheaders",ai_api_key="none",url="nourl")
   expect_error(sendPrompt(agent=agent,prompt="this is my prompt",return.type = "text"))
-  # no API
+  # No API
   agent <- list(name="userAgent",model="nomodel", headers="noheaders",ai_api_key="none",type="notypes",url="nourl")
   expect_error(sendPrompt(agent=agent,prompt="this is my prompt",return.type = "text"))
-  # no API key
+  # No API key
   agent <- list(name="userAgent",model="nomodel", headers="noheaders",API="noapi",type="notypes",url="nourl")
   expect_error(sendPrompt(agent=agent,prompt="this is my prompt",return.type = "text"))
 })

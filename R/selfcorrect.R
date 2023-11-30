@@ -7,7 +7,7 @@
 #' @param agent An object containing the agent's information (e.g., type and model).
 #' @param prompt The prompt text to send to the language model.
 #' @param context Optional context to provide alongside the prompt (default is rbionfoExp).
-#' @param attempts numeric value denoting how many times the code should be sent back for fixing.
+#' @param attempts Numeric value denoting how many times the code should be sent back for fixing.
 #' @param output.file Optional output file created holding parsed code
 #' @param ... Additional arguments to be passed to the \code{\link{sendPrompt}} function.
 #' @return A list containing the following elements:
@@ -60,31 +60,31 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
     }
     }
 
-  # send prompt
+  # Send prompt
   response <- sendPrompt(agent,prompt,context,return.type="text",...)
 
-  # clean the code backtick structure and install.packages calls
+  # Clean the code backtick structure and install.packages calls
   response<-clean_code_blocks(response)
 
   initial.response <- response
 
 
-  # parse the code
+  # Parse the code
   blocks <- extractCode(text=initial.response,delimiter="```")
   initial.blocks <- blocks
 
-  # check if any code is returned
+  # Check if any code is returned
   if(blocks$code==""){
     print(response)
     stop("no code returned")
 
   }
 
-  # extract and install packages if needed
+  # Extract and install packages if needed
   extractInstallPkg(blocks$code)
 
 
-  # list of messages to the bot
+  # List of messages to the bot
   msgs<- list(
     list(
       "role" = "user",
@@ -102,52 +102,52 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   # Define the prompt template to inject the error message
   promptTemplate <- "The previous code returned the following errors and/or warnings,\n <error> \n return fixed code in one block, delimited in triple backticks"
 
-  # set up the on of the final variables that will be returned in the end
+  # Set up the on of the final variables that will be returned in the end
   codeWorks=FALSE
 
-  # execute the code up to "attempts" times
+  # Execute the code up to "attempts" times
   for(i in 1:attempts){
 
-    # see if the code runs without errors
+    # See if the code runs without errors
     res<-executeCode(blocks$code, output = "html",output.file = output.file )
 
-    # if there are errors
+    # If there are errors
     if(is.list(res) & ("error" %in% names(res) )){
 
-      # get error messages
+      # Get error messages
 
       # Collapse the character vectors within the list elements
-      # this is good if we have multiple errors in the list per element
+      # This is good if we have multiple errors in the list per element
       collapsed_list <- lapply(res, function(x) paste(x, collapse = "\n"))
 
-      # get error/warning text
+      # Get error/warning text
       errs<-  paste(paste0(names(collapsed_list ), ": ", collapsed_list ), collapse = "\n ")
 
       # Use sub() to substitute the replacement string for the wildcard string
       promptAddon <- sub("<error>", errs, promptTemplate)
 
-      #get an updated prompt
+      # Get an updated prompt
       #new.prompt<-paste(response,promptAddon)
       new.prompt<-promptAddon
 
 
-      # send prompt
+      # Send prompt
       msgs<-append(msgs,list(list("role" = "user","content" = new.prompt)))
       response <- sendPrompt(agent=agent, prompt=paste(response,promptAddon), return.type = "text",messages=msgs)
       msgs<-append(msgs,list(list("role" = "assistant","content" = response)))
 
-      # clean code from wrong backticks
+      # Clean code from wrong backticks
       response<-clean_code_blocks(response)
 
-      # parse the code
+      # Parse the code
       blocks<- extractCode(text=response,delimiter="```")
 
-      # extract and install libs needed
+      # Extract and install libs needed
       extractInstallPkg(blocks$code)
 
 
     }else{
-      # break the loop if the code works without errors
+      # Break the loop if the code works without errors
       codeWorks=TRUE
       break
 
@@ -156,7 +156,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   }
 
 
-  # return the latest code and initial prompt and everthing else
+  # Return the latest code, initial prompt, and everything else
   return(list(init.response=initial.response,
               init.blocks=initial.blocks,
               final.response=response,
