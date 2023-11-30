@@ -28,6 +28,9 @@ clean_code_blocks<-function(response){
   response<-gsub("```\\{r\\}", "```", response)
   response<-gsub("```\\{R\\}", "```", response)
 
+  # clean of possible output text
+  response<-gsub("\n\\[[0-9]+\\].*\n","",response)
+
   # clean install.packages calls
   response <- gsub("install.packages\\([^)]+\\)+", "", response)
 
