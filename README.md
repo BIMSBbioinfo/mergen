@@ -36,6 +36,7 @@ pak::pak("BIMSBbioinfo/mergen")
 - [Create an OpenAI API
   key](https://platform.openai.com/account/api-keys) to use with the
   package
+- [Create a replicate API key](https://replicate.com/pricing)
 - Set up the API key in R
 
 #### Configuring your AI API key
