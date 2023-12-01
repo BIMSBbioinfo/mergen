@@ -7,7 +7,7 @@
 setupAgent(
   name = c("openai", "replicate"),
   type = NULL,
-  model,
+  model = NULL,
   ai_api_key = Sys.getenv("AI_API_KEY")
 )
 }
