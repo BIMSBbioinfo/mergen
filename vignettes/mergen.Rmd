@@ -20,7 +20,7 @@ library(mergen)
 
 mergen is a package which employs artificial intelligence to convert data analysis questions into executable code, explanations, and algorithms. The self-correction features allow the generated code to be optimized for performance and accuracy. mergen features a user-friendly chat interface, enabling users to interact with the AI agent and extract valuable insights from their data effortlessly.
 
-This document introduces you to mergen's basic set of tools, and shows you how to apply them
+This document introduces you to mergens basic set of tools, and shows you how to apply them
 to answer data analysis related questions and generate relevant R code. 
 
 ### Setting up an AI-agent
