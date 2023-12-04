@@ -72,16 +72,22 @@ setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api
       type="chat"
     }
     if (type=="chat"){
+      chatModels= strsplit("gpt-4, gpt-4-0314, gpt-4-32k, gpt-4-32k-0314, gpt-3.5-turbo, gpt-3.5-turbo-0301",", ")[[1]]
       base_url ="https://api.openai.com/v1/chat/completions"
       if (is.null(model)){
         warning ("No model selected. Model will be set to gtp-3.5-turbo.")
         model = "gtp-3.5-turbo"
+      }else if(!model%in% chatModels){
+        stop (cat("Invalid model selected. Please choose one of the following models:\n ",chatModels))
       }
     }else if (type=="completion"){
+      completionModels=strsplit("text-davinci-003, text-davinci-002, text-curie-001, text-babbage-001, text-ada-001",", ")[[1]]
       base_url ="https://api.openai.com/v1/completions"
       if (is.null(model)){
         warning ("No model selected. Model will be set to text-curie-001.")
         model = "text-curie-001"
+      }else if(!model%in%completionModels){
+        stop (cat("Invalid model selected. Please choose one of the following models:\n ",completionModels))
       }
     }else{
       stop (cat("Type",type,"not supported"))
