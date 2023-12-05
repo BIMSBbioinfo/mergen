@@ -1,6 +1,9 @@
 #' Extract file names from user prompt
 #'
-#' This function extracts file names from the user prompt
+#' This function extracts file names from the user prompt. Current filenames that
+#' are supported by this function are *.txt, *.tsv, *.csv *.xls, *.xlsx,
+#' *.bed, *.bigWig, *.bw" and *.bigBed. Other filenames will not be extracted.
+#' If no filenames are found, the function will return NA.
 #' @param text user prompt
 #'
 #' @examples
@@ -19,7 +22,7 @@ extractFilenames <- function(text) {
   # -----------------------------------------------------------------------------
 
   # Use regular expression to match common file extensions
-  matches <- gregexpr("\\b\\S+\\.(txt|tsv|csv|xls|xlsx)\\b", text, ignore.case = TRUE)
+  matches <- gregexpr("\\b\\S+\\.(txt|tsv|csv|xls|xlsx|bed|bigWig|bw|bigBed)\\b", text, ignore.case = TRUE)
   filenames <- regmatches(text, matches)[[1]]
 
   # Return filenames if found, otherwise return NA

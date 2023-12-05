@@ -10,7 +10,10 @@ extractFilenames(text)
 \item{text}{user prompt}
 }
 \description{
-This function extracts file names from the user prompt
+This function extracts file names from the user prompt. Current filenames that
+are supported by this function are *.txt, *.tsv, *.csv *.xls, *.xlsx,
+*.bed, *.bigWig, *.bw" and *.bigBed. Other filenames will not be extracted.
+If no filenames are found, the function will return NA.
 }
 \examples{
 \dontrun{
