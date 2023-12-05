@@ -19,7 +19,7 @@ setupAgent(
 \item{model}{LLM model you wish to use.
 For openAI chat model examples are:
 \itemize{
-\item 'gtp3-5-turbo'
+\item 'gtp-3-5-turbo'
 \item 'gtp-4'}
 For openAI completion models examples are:
 \itemize{
