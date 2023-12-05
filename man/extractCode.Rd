@@ -16,8 +16,8 @@ A list with two elements: 'code' and 'text'. 'code' contains the concatenated co
         'text' contains the remaining text with code blocks removed.
 }
 \description{
-The function parses the code and can return the text and code as single blocks
-This good for execution and might be useful for displaying purposes later on.
+This function parses the agents answer and returns the text and code as single blocks.
+The results can be used for code execution and might be useful for displaying purposes later on.
 }
 \examples{
 text <- "\n\nThe following, normalize the table and do PCA.

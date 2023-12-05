@@ -1,7 +1,7 @@
 #' extract the code and text from the text returned by LLM agent
 #'
-#' The function parses the code and can return the text and code as single blocks
-#' This good for execution and might be useful for displaying purposes later on.
+#' This function parses the agents answer and returns the text and code as single blocks.
+#' The results can be used for code execution and might be useful for displaying purposes later on.
 #'
 #' @param text A character string containing the text with embedded code blocks.
 #' @param delimiter A character string representing the delimiter used to enclose the code blocks (default: "```").

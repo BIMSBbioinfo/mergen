@@ -7,11 +7,12 @@
 fileHeaderPrompt(filenames)
 }
 \arguments{
-\item{filenames}{list containing filenames mentioned in prompt}
+\item{filenames}{list containing filenames.}
 }
 \description{
 This function extracts file headers from
-files mentioned in user prompts.
+files. Recommended is to use this function
+with the results from \code{\link{extractFilenames}}
 }
 \examples{
 \dontrun{

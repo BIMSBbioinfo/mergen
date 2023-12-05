@@ -1,8 +1,9 @@
 #' Extract file headers from files in prompt
 #'
 #' This function extracts file headers from
-#' files mentioned in user prompts.
-#' @param filenames list containing filenames mentioned in prompt
+#' files. Recommended is to use this function
+#' with the results from \code{\link{extractFilenames}}
+#' @param filenames list containing filenames.
 #'
 #' @examples
 #' \dontrun{
