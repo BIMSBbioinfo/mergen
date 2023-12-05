@@ -39,3 +39,6 @@ response <- sendPrompt(agent, prompt)
 response <- sendPrompt(agent,prompt,context=rbionfoExp,return.type="text", max_tokens = 500)
 }
 }
+\seealso{
+[promptContext()] for predefined contexts to use.
+}

@@ -46,3 +46,6 @@ error messages function returns the original response.
 response <- selfcorrect(agent,prompt,context=rbionfoExp, max_tokens = 500)
 }
 }
+\seealso{
+[promptContext()] for predefined contexts to use.
+}

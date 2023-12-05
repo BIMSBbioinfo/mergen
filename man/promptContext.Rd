@@ -10,6 +10,9 @@ promptContext(type = "simple")
 \item{type}{specifies the type of context you wish to be returned.
 Valid options are "simple", "actAs", "CoT" and "rbioinfoExp"}
 }
+\value{
+A string holding the predefined context.
+}
 \description{
 This function holds various predefined prompt
 contexts that can be used for prompt engineering.
