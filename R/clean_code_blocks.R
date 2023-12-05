@@ -1,8 +1,13 @@
 #' Clean code blocks returned by the agent
 #'
-#' This function cleans up the code blocks which
-#' are returned by the agent to ensure code blocks
-#' can run.
+#' This function cleans up the response
+#' returned by the agent to ensure code blocks
+#' can run. It ensures that characters such as {r}, {R}
+#' R and r are cleaned from code blocks in the agents
+#' response, so that the code blocks are able to be extracted by
+#' @seealso [extractCode()] and ran as expected. It also cleans
+#' the response from any install.package calls, and recorded output,
+#' so that when code blocks are extracted, the code can run smoothly.
 #'
 #' @param response response received from the agent
 #'
