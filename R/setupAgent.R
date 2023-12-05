@@ -38,6 +38,20 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' @param name Name of the API you want to use. Currently supported APIs are "openai" and "replicate"
 #' @param type Specify type of model (chat or completion). This parameter only needs to be specified when using 'openai
 #' @param model LLM model you wish to use.
+#' For openAI chat model examples are:
+#' \itemize{
+#' \item 'gtp3-5-turbo'
+#' \item 'gtp-4'}
+#' For openAI completion models examples are:
+#' \itemize{
+#' \item 'text-curie-001'
+#' \item 'text-davinci-002'}
+#' For replicate models examples are:\itemize{
+#'  \item llama-2-70b-chat ( as '02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3')
+#'  \item llama-2-13b-chat ( as 'f4e2de70d66816a838a89eeeb621910adffb0dd0baba3976c96980970978018d')}
+#'  For a full list of openAI models
+#'  \href{https://platform.openai.com/docs/models/overview}{click here}. For a full list of Replicate models,
+#'  \href{https://replicate.com/collections/language-models}{click here}.
 #' @param ai_api_key personal API key for accessing LLM
 #'
 #' @examples
