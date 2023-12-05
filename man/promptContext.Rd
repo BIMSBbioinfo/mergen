@@ -8,7 +8,7 @@ promptContext(type = "simple")
 }
 \arguments{
 \item{type}{specifies the type of context you wish to be returned.
-Valid options are "simple", "actAs", "CoT" and "rbioinfoExp"}
+Valid options are "simple", "actAs", "CoT" and "rbionfoExp"}
 }
 \value{
 A string holding the predefined context.

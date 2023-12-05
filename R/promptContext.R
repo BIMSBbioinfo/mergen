@@ -4,7 +4,7 @@
 #' contexts that can be used for prompt engineering.
 #'
 #'@param type specifies the type of context you wish to be returned.
-#' Valid options are "simple", "actAs", "CoT" and "rbioinfoExp"
+#' Valid options are "simple", "actAs", "CoT" and "rbionfoExp"
 #' @return A string holding the predefined context.
 #' @export
 
