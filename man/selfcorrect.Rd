@@ -47,5 +47,5 @@ response <- selfcorrect(agent,prompt,context=rbionfoExp, max_tokens = 500)
 }
 }
 \seealso{
-[promptContext()] for predefined contexts to use.
+\code{\link{promptContext}} for predefined contexts to use.
 }

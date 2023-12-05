@@ -17,7 +17,7 @@
 #' \item{code.works}{A boolean value indicating whether the code works.}
 #' \item{exec.result}{A character string representing the execution results.}
 #' \item{tried.attempts}{An integer representing the number of attempts.}
-#' @seealso [promptContext()] for predefined contexts to use.
+#' @seealso \code{\link{promptContext}} for predefined contexts to use.
 #' @examples
 #' \dontrun{
 #'

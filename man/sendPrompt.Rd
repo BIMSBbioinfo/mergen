@@ -40,5 +40,5 @@ response <- sendPrompt(agent,prompt,context=rbionfoExp,return.type="text", max_t
 }
 }
 \seealso{
-[promptContext()] for predefined contexts to use.
+\code{\link{promptContext}} for predefined contexts to use.
 }

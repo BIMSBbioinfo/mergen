@@ -21,6 +21,7 @@ promptContext <- function(type="simple"){
   assertthat::assert_that(
     assertthat::is.string(type)
   )
+  #-----------------------------------------------------------------------------
 
   if (!type %in% c("simple","actAs", "CoT", "rbionfoExp")){
     stop ("Not a valid context. Valid contexts are: simple, actAs, CoT or rbionfoExp")
@@ -28,5 +29,5 @@ promptContext <- function(type="simple"){
     return (eval(parse(text=type)))
   }
 
-  #-----------------------------------------------------------------------------
+
 }

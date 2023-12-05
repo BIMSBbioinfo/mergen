@@ -13,7 +13,7 @@ rbionfoExp="Act as an expert bioformatician and R user. Answer questions using y
 #' @param return.type The type of output to return, either the text response ("text") or the entire response object ("object").
 #' @param ... Additional arguments to be passed to the prompt function.
 #' @return The text response or the entire response object, based on the specified return type.
-#' @seealso [promptContext()] for predefined contexts to use.
+#' @seealso \code{\link{promptContext}} for predefined contexts to use.
 #' @examples
 #' \dontrun{
 #' agent <- setupAgent(name="openai",type="chat",model="gpt-4",
