@@ -90,20 +90,21 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
   return (res)
 }
 
+
+# environment for testPrompter:
+pkg.env <- new.env()
+pkg.env$prompterCount <- 0
+
+
 # This function returns three responses one after another
 # It is used to test the selfcorrect function() and maybe used for other
 # tests
 #' @noRd
 testPrompter<-function(agent,prompt, ...){
 
-  # Define a static variable to keep track of the count
-  if (!exists("prompterCount")) {
-    prompterCount <<- 0
-  }
+  if(pkg.env$prompterCount >= 3){pkg.env$prompterCount <- 0}
 
-  if(prompterCount >= 3){prompterCount <<- 0}
-
-  prompterCount  <<- prompterCount  + 1
+  pkg.env$prompterCount <- pkg.env$prompterCount + 1
 
   # List of responses where it gradually gets the correct code
   botResponses=list(
@@ -114,7 +115,7 @@ testPrompter<-function(agent,prompt, ...){
     "\n\nThe third response.The following R code will read the file called \"test.txt\", normalize the table and do PCA. First, the code will read the file into an R data frame: \n\n```\nplot(1:10)```\n\nNext, the data will be normalized to the range of 0 to 1:\n\n"
     )
 
-  return(botResponses[[prompterCount]])
+  return(botResponses[[pkg.env$prompterCount]])
 }
 
 # Internal completion code for open ai
