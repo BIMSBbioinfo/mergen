@@ -58,7 +58,9 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' \dontrun{
 #' myAgent <- setupAgent(name="openai",type="chat",model="gpt-4",ai_api_key=Sys.getenv("AI_API_KEY"))
 #'
-#' myAgent <- setupAgent(name="replicate",type=NULL,model="02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",ai_api_key=Sys.getenv("AI_API_KEY"))
+#' myAgent <- setupAgent(name="replicate",type=NULL,
+#'                      model="02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
+#'                      ai_api_key=Sys.getenv("AI_API_KEY"))
 #' }
 #' @export
 
