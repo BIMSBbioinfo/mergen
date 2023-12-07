@@ -19,7 +19,7 @@ are supported by this function are *.txt, *.tsv, *.csv *.xls, *.xlsx,
 If no filenames are found, the function will return NA.
 }
 \examples{
-\donttest{
+{
 user_prompt <- "How do I perform PCA on data in my file called test.txt?"
 extractFilenames(text=user_prompt)
 }
