@@ -15,6 +15,10 @@ the code is not executed.}
 \item{output.file}{If the output is "html", user can provide a file name for the html.
 If not provided a temporary file will be created.}
 }
+\value{
+If the output is "eval": if running the code causes errors, errors are returned.
+Otherwise NA is returned  If output is "html", output file is returned.
+}
 \description{
 The function executes a chunk of code either in the current working environment
 or saves the output as an HTML file to be rendered as a part of a web page

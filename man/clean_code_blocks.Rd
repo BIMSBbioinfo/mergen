@@ -9,6 +9,9 @@ clean_code_blocks(response)
 \arguments{
 \item{response}{response received from the agent}
 }
+\value{
+A string holding the response of the agent, cleaned from any unwanted characters.
+}
 \description{
 This function cleans up the response
 returned by the agent to ensure code blocks
@@ -20,7 +23,8 @@ the response from any install.package calls, and recorded output,
 so that when code blocks are extracted, the code can run smoothly.
 }
 \examples{
-\dontrun{
+{
+response <- "To perform PCA, do the following: ```R prcomp(data)``` This funcion will perform PCA."
 clean_code <- clean_code_blocks(response)
 }
 }

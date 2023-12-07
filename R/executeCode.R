@@ -8,7 +8,8 @@
 #'               the code is not executed.
 #' @param output.file If the output is "html", user can provide a file name for the html.
 #'                  If not provided a temporary file will be created.
-#'
+#' @returns If the output is "eval": if running the code causes errors, errors are returned.
+#' Otherwise NA is returned  If output is "html", output file is returned.
 #' @export
 executeCode <- function(code, output = "eval",
                          output.file = NULL) {

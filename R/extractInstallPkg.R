@@ -8,9 +8,9 @@
 #' @importFrom BiocManager install
 #' @importFrom BiocManager valid
 #' @importFrom utils install.packages
-#'
+#' @return  No value returned. Called for installation of package.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Check and install "dplyr" package
 #' check_install("dplyr")
 #' }
@@ -48,9 +48,11 @@ check_install<-function(package_name){
 #' are needed to run the code returned by the agent
 #' and installs them as needed.
 #' @param code code block returned by the agent.
+#' @return  No value returned. Called for installation of package.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Check code for packages that need installing
+#' code <- "library(devtools)\n x<-5"
 #' extractInstallPkg(code)
 #' }
 #'

@@ -9,12 +9,15 @@ check_install(package_name)
 \arguments{
 \item{package_name}{A character string specifying the name of the package to be checked and installed.}
 }
+\value{
+No value returned. Called for installation of package.
+}
 \description{
 This function checks if an R package is installed, and if not, attempts to install
 it using either the standard CRAN repository or the Bioconductor repository.
 }
 \examples{
-\dontrun{
+\donttest{
 # Check and install "dplyr" package
 check_install("dplyr")
 }

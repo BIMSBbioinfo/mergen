@@ -5,9 +5,10 @@
 #' *.bed, *.bigWig, *.bw and *.bigBed. Other filenames will not be extracted.
 #' If no filenames are found, the function will return NA.
 #' @param text user prompt
-#'
+#' @returns A list holding file names from the user prompt.
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' user_prompt <- "How do I perform PCA on data in my file called test.txt?"
 #' extractFilenames(text=user_prompt)
 #' }
 #' @export

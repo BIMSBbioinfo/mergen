@@ -9,6 +9,9 @@ extractFilenames(text)
 \arguments{
 \item{text}{user prompt}
 }
+\value{
+A list holding file names from the user prompt.
+}
 \description{
 This function extracts file names from the user prompt. Current filenames that
 are supported by this function are *.txt, *.tsv, *.csv *.xls, *.xlsx,
@@ -16,7 +19,8 @@ are supported by this function are *.txt, *.tsv, *.csv *.xls, *.xlsx,
 If no filenames are found, the function will return NA.
 }
 \examples{
-\dontrun{
+\donttest{
+user_prompt <- "How do I perform PCA on data in my file called test.txt?"
 extractFilenames(text=user_prompt)
 }
 }

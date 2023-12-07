@@ -9,14 +9,18 @@ extractInstallPkg(code)
 \arguments{
 \item{code}{code block returned by the agent.}
 }
+\value{
+No value returned. Called for installation of package.
+}
 \description{
 This function extracts all package names that
 are needed to run the code returned by the agent
 and installs them as needed.
 }
 \examples{
-\dontrun{
+\donttest{
 # Check code for packages that need installing
+code <- "library(devtools)\n x<-5"
 extractInstallPkg(code)
 }
 
