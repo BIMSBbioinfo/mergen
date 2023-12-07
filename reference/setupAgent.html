@@ -86,15 +86,21 @@ For openAI chat model examples are:</p><ul><li><p>'gtp-3-5-turbo'</p></li>
 <dd><p>personal API key for accessing LLM</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>A list holding agent information.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">myAgent</span> <span class="op">&lt;-</span> <span class="fu">setupAgent</span><span class="op">(</span>name<span class="op">=</span><span class="st">"openai"</span>,type<span class="op">=</span><span class="st">"chat"</span>,model<span class="op">=</span><span class="st">"gpt-4"</span>,ai_api_key<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"AI_API_KEY"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">myAgent</span> <span class="op">&lt;-</span> <span class="fu">setupAgent</span><span class="op">(</span>name<span class="op">=</span><span class="st">"openai"</span>,type<span class="op">=</span><span class="st">"chat"</span>,model<span class="op">=</span><span class="st">"gpt-4"</span>,ai_api_key<span class="op">=</span><span class="st">"my_key"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">myAgent</span> <span class="op">&lt;-</span> <span class="fu">setupAgent</span><span class="op">(</span>name<span class="op">=</span><span class="st">"replicate"</span>,type<span class="op">=</span><span class="cn">NULL</span>,</span></span>
 <span class="r-in"><span>                     model<span class="op">=</span><span class="st">"02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3"</span>,</span></span>
-<span class="r-in"><span>                     ai_api_key<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"AI_API_KEY"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                     ai_api_key<span class="op">=</span><span class="st">"my_key"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
