@@ -6,7 +6,7 @@
 #' @param filenames list containing filenames.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' prompt <- "how do I perform PCA on data in a file called test.txt?"
 #' filenames <- extractFilenames(prompt)
 #' fileHeaderPrompt(filenames)

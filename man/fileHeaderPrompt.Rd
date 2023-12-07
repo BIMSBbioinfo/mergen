@@ -15,7 +15,7 @@ files. Recommended is to use this function
 with the results from \code{\link{extractFilenames}}
 }
 \examples{
-\donttest{
+\dontrun{
 prompt <- "how do I perform PCA on data in a file called test.txt?"
 filenames <- extractFilenames(prompt)
 fileHeaderPrompt(filenames)
