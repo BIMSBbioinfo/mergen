@@ -53,14 +53,14 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #'  \href{https://platform.openai.com/docs/models/overview}{click here}. For a full list of Replicate models,
 #'  \href{https://replicate.com/collections/language-models}{click here}.
 #' @param ai_api_key personal API key for accessing LLM
-#'
+#' @return A list holding agent information.
 #' @examples
-#' \dontrun{
-#' myAgent <- setupAgent(name="openai",type="chat",model="gpt-4",ai_api_key=Sys.getenv("AI_API_KEY"))
+#' {
+#' myAgent <- setupAgent(name="openai",type="chat",model="gpt-4",ai_api_key="my_key")
 #'
 #' myAgent <- setupAgent(name="replicate",type=NULL,
 #'                      model="02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
-#'                      ai_api_key=Sys.getenv("AI_API_KEY"))
+#'                      ai_api_key="my_key")
 #' }
 #' @export
 
