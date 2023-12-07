@@ -7,7 +7,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-0468-0117")),
     person("Jacqueline Anne", "Jansen", , "jacqueline-98@hotmail.com", role = "aut")
   )
-Description: Employing artificial intelligence to convert data analysis questions into executable code, explanations, and algorithms. The self-correction feature ensures the generated code is optimized for performance and accuracy. mergen features a user-friendly chat interface, enabling users to interact with the AI agent and extract valuable insights from their data effortlessly.
+Description: Employing artificial intelligence to convert data analysis questions into executable code, explanations, and algorithms. The self-correction feature ensures the generated code is optimized for performance and accuracy. 'mergen' features a user-friendly chat interface, enabling users to interact with the AI agent and extract valuable insights from their data effortlessly.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
