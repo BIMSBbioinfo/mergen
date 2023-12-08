@@ -94,7 +94,7 @@ setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api
         warning ("No model selected. Model will be set to gtp-3.5-turbo.")
         model = "gtp-3.5-turbo"
       }else if(!model%in% chatModels){
-        stop (cat("Invalid model selected. Please choose one of the following models:\n ",chatModels))
+        stop(paste("Invalid model selected. Please choose one of the following models:\n ",chatModels))
       }
     }else if (type=="completion"){
       completionModels=strsplit("text-davinci-003, text-davinci-002, text-curie-001, text-babbage-001, text-ada-001",", ")[[1]]
@@ -103,16 +103,16 @@ setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api
         warning ("No model selected. Model will be set to text-curie-001.")
         model = "text-curie-001"
       }else if(!model%in%completionModels){
-        stop (cat("Invalid model selected. Please choose one of the following models:\n ",completionModels))
+        stop(paste("Invalid model selected. Please choose one of the following models:\n ",completionModels))
       }
     }else{
-      stop (cat("Type",type,"not supported"))
+      stop(paste("Type",type,"not supported"))
     }
     headers <- c(
       "Authorization" = paste("Bearer", ai_api_key),
       "Content-Type" = "application/json")
   }else {
-    stop (cat("Chosen API",name, "not supported."))
+    stop("Chosen API ",name, " not supported.")
   }
   return(list(name = "userAgent",type=type,API=name, url=base_url, model=model, headers=headers,ai_api_key=ai_api_key))
 }

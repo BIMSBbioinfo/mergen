@@ -56,7 +56,7 @@ executeCode <- function(code, output = "eval",
 
     # Create a temporary R script file to store the parsed code
     temp_file <- tempfile(fileext = ".R")
-    print(temp_file)
+    message(temp_file)
     writeLines(code, temp_file)
 
     wd<-getwd()

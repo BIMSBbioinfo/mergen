@@ -56,7 +56,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
   #------------------------------------------------------------------------------------------
   if (agent$API =="openai"){
     if (agent$type == "completion"){
-      stop ("selfcorrect cannot be used with type completion. Can only be used with type chat.")
+      stop("selfcorrect cannot be used with type completion. Can only be used with type chat.")
     }
     }
 
@@ -75,7 +75,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
 
   # Check if any code is returned
   if(blocks$code==""){
-    print(response)
+    message(response)
     stop("no code returned")
 
   }

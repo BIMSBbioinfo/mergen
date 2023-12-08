@@ -8,6 +8,8 @@ Authors@R: c(
     person("Jacqueline Anne", "Jansen", , "jacqueline-98@hotmail.com", role = "aut")
   )
 Description: Employing artificial intelligence to convert data analysis questions into executable code, explanations, and algorithms. The self-correction feature ensures the generated code is optimized for performance and accuracy. 'mergen' features a user-friendly chat interface, enabling users to interact with the AI agent and extract valuable insights from their data effortlessly.
+URL: https://github.com/BIMSBbioinfo/mergen,
+    https://bioinformatics.mdc-berlin.de/mergen/
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

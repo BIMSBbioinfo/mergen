@@ -3,7 +3,9 @@
 #' This function extracts file headers from
 #' files. Recommended is to use this function
 #' with the results from \code{\link{extractFilenames}}
-#' @param filenames list containing filenames.
+#' @param filenames list containing file names.
+#'
+#' @return A string containing the file headers of the files in "filenames" list
 #'
 #' @examples
 #' \dontrun{

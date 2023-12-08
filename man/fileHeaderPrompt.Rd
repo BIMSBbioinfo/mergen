@@ -7,7 +7,10 @@
 fileHeaderPrompt(filenames)
 }
 \arguments{
-\item{filenames}{list containing filenames.}
+\item{filenames}{list containing file names.}
+}
+\value{
+A string containing the file headers of the files in "filenames" list
 }
 \description{
 This function extracts file headers from

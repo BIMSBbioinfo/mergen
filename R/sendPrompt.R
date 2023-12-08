@@ -64,12 +64,12 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
       }else if (agent$type =="chat"){
         promptFunc = .openai_chat
       }else{
-        stop (cat("Agent type", agent$type ,"is not compatible with the current setup"))
+        stop("Agent type ", agent$type ," is not compatible with the current setup")
       }
     }else if (agent$API == "replicate"){
       promptFunc = .replicate_chat
     }else{
-      stop(cat("The specified API",agent$API,"is not compatible with the current setup"))
+      stop("The specified API ",agent$API," is not compatible with the current setup")
     }
   }else{
     stop("The specified LLM agent is not compatible with the current setup")
@@ -77,7 +77,7 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
 
   # Send the prompt and get the result
   if (return.type != "text" & return.type !="object"){
-    stop (cat("Return type",return.type,"not supported"))
+    stop("Return type ",return.type," not supported")
   }
 
 
@@ -191,7 +191,7 @@ testPrompter<-function(agent,prompt, ...){
     # If for some reason request did not go through
     if (!parsed_post$status =="starting"){
       print (parsed_post)
-      stop ("Request failed.")
+      stop("Request failed.")
     }
 
     # Fetch status and parse
