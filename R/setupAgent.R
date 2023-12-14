@@ -92,7 +92,7 @@ setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api
       base_url ="https://api.openai.com/v1/chat/completions"
       if (is.null(model)){
         warning ("No model selected. Model will be set to gtp-3.5-turbo.")
-        model = "gtp-3.5-turbo"
+        model = "gpt-3.5-turbo"
       }else if(!model%in% chatModels){
         stop(paste("Invalid model selected. Please choose one of the following models:\n ",chatModels))
       }
