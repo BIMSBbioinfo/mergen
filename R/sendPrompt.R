@@ -155,7 +155,7 @@ testPrompter<-function(agent,prompt, ...){
                                    ...)
   }
   if (return.type=="text"){
-    return (res$choices[1,4])
+    return (res$choices[1,5])
   }else(
     return(res)
   )
