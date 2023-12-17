@@ -35,7 +35,11 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' set up an online LLM API for subsequent tasks
 #'
 #' This function sets up an large language model API for tasks.
-#' @param name Name of the API you want to use. Currently supported APIs are "openai" and "replicate"
+#' @param name A string for the name of the API, one of "openai", "replicate" or "generic".
+#'             Currently supported APIs are "openai" and "replicate". If the user wishes to use
+#'             another API that has similar syntax to openai API this is also supported via the
+#'             the "generic" option. In this case, the user should also provide a url for the API
+#'             using the
 #' @param type Specify type of model (chat or completion). This parameter only needs to be specified when using 'openai
 #' @param model LLM model you wish to use.
 #' For openAI chat model examples are:
@@ -52,6 +56,7 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #'  For a full list of openAI models
 #'  \href{https://platform.openai.com/docs/models/overview}{click here}. For a full list of Replicate models,
 #'  \href{https://replicate.com/collections/language-models}{click here}.
+#' @param url the url for the API in case the API "generic" is selected. (Default: NULL)
 #' @param ai_api_key personal API key for accessing LLM
 #' @return A list holding agent information.
 #' @examples
@@ -65,7 +70,9 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' @export
 
 
-setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api_key=Sys.getenv("AI_API_KEY")){
+setupAgent<-function(name=c("openai","replicate","generic"),
+                     type=NULL, model=NULL,url=NULL, ai_api_key=Sys.getenv("AI_API_KEY")){
+
   if (ai_api_key==""){
     stop("Invalid API key provided. Please set this as a string or load AI_API_KEY into your system environment.")
   }
@@ -108,6 +115,13 @@ setupAgent<-function(name=c("openai","replicate"), type=NULL, model=NULL, ai_api
     }else{
       stop(paste("Type",type,"not supported"))
     }
+    headers <- c(
+      "Authorization" = paste("Bearer", ai_api_key),
+      "Content-Type" = "application/json")
+  }
+  else if(name=="generic"){
+
+    base_url=url
     headers <- c(
       "Authorization" = paste("Bearer", ai_api_key),
       "Content-Type" = "application/json")

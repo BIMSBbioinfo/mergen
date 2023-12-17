@@ -68,6 +68,8 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
       }
     }else if (agent$API == "replicate"){
       promptFunc = .replicate_chat
+    }else if (agent$API == "generic"){
+        promptFunc = genericChat
     }else{
       stop("The specified API ",agent$API," is not compatible with the current setup")
     }
@@ -229,4 +231,31 @@ testPrompter<-function(agent,prompt, ...){
     }else{
       return (parsed_get)
     }
+}
+
+# send chat prompt to a generic API that is similar to openai API
+genericChat<-function(agent, prompt,...){
+
+  response <- POST(
+    url =agent$url,
+
+    add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
+    content_type("application/json"),
+    encode = "json",
+    body = list(
+      model = agent$model,
+      messages = list(
+        list(role = "user", content = prompt)
+      )
+    )
+  )
+
+  if(status_code(response)>200) {
+    result <- trimws(content(response)$error$message)
+  } else {
+    result <- trimws(content(response)$choices[[1]]$message$content)
+  }
+
+  return(result)
+
 }

@@ -32,6 +32,8 @@ extractCode<-function(text,delimiter="```"){
   )
   # -----------------------------------------------------------------------------
 
+  text<-clean_code_blocks(text) # cleans code blocks automatically
+
   # Split the text by the delimiter
   parts <- strsplit(text, delimiter, fixed = TRUE)[[1]]
 

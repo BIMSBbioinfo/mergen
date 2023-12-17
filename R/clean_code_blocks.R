@@ -30,6 +30,7 @@ clean_code_blocks<-function(response){
   #clear response of weird characters, otherwise this will return as error
   response<-gsub("```r", "```", response)
   response<-gsub("```R", "```", response)
+  response<-gsub("```bash", "```", response)
   response<-gsub("```\\{r\\}", "```", response)
   response<-gsub("```\\{R\\}", "```", response)
 
