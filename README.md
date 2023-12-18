@@ -32,7 +32,8 @@ pak::pak("BIMSBbioinfo/mergen")
 
 ### Prerequisites
 
-- Make an AI account
+- Make an AI platform account. Choices are openai.com, neets.ai (at the time of writing free with some limits), replicate.com , perplexity.ai etc.
+  In addition, you can locally run an LLM in server mode and you can interact with it via API. One example is [GPT4all](https://gpt4all.io/). Some of these solutions are not tested but should work with mergen. 
 - [Create an OpenAI API
   key](https://platform.openai.com/account/api-keys) to use with the
   package
@@ -80,6 +81,13 @@ can use the following command:
 ``` r
 Sys.setenv(AI_API_KEY="your_key")
 ```
+
+### Citing mergen
+If you used mergen please cite:
+
+* Jacqueline A Jansen, Artür Manukyan, Nour Al Khoury, Altuna Akalin. _(2023)_ *"[Leveraging large language models for data analysis automation]([bioRxiv 2023.12.11.571140; doi: https://doi.org/10.1101/2023.12.11.571140]"* _bioRxiv_, https://doi.org/10.1101/2023.12.11.571140
+
+
 
 ### Getting help
 
