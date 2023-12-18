@@ -85,7 +85,7 @@ Sys.setenv(AI_API_KEY="your_key")
 ### Citing mergen
 If you used mergen please cite:
 
-* Jacqueline A Jansen, Artür Manukyan, Nour Al Khoury, Altuna Akalin. _(2023)_ *"[Leveraging large language models for data analysis automation]([bioRxiv 2023.12.11.571140; doi: https://doi.org/10.1101/2023.12.11.571140]"* _bioRxiv_, https://doi.org/10.1101/2023.12.11.571140
+* Jacqueline A Jansen, Artür Manukyan, Nour Al Khoury, Altuna Akalin. _(2023)_ *"[Leveraging large language models for data analysis automation]( https://doi.org/10.1101/2023.12.11.571140)"* _bioRxiv_, doi: 10.1101/2023.12.11.571140
 
 
 
