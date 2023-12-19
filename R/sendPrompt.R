@@ -236,24 +236,40 @@ testPrompter<-function(agent,prompt, ...){
 # send chat prompt to a generic API that is similar to openai API
 genericChat<-function(agent, prompt,...){
 
-  response <- POST(
-    url =agent$url,
+  if(is.list(prompt)){
+    response <- httr::POST(
+      url =agent$url,
 
-    add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
-    content_type("application/json"),
-    encode = "json",
-    body = list(
-      model = agent$model,
-      messages = list(
-        list(role = "user", content = prompt)
+      httr::add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
+      httr::content_type("application/json"),
+      encode = "json",
+      body = list(
+        model = agent$model,
+        messages = list(
+          prompt
+        )
       )
     )
-  )
+  }else {
+    response <- httr::POST(
+      url =agent$url,
 
-  if(status_code(response)>200) {
-    result <- trimws(content(response)$error$message)
+      httr::add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
+      httr::content_type("application/json"),
+      encode = "json",
+      body = list(
+        model = agent$model,
+        messages = list(
+          list(role = "user", content = prompt)
+        )
+      )
+    )
+  }
+
+  if(httr::status_code(response)>200) {
+    result <- trimws(httr::content(response)$error$message)
   } else {
-    result <- trimws(content(response)$choices[[1]]$message$content)
+    result <- trimws(httr::content(response)$choices[[1]]$message$content)
   }
 
   return(result)
