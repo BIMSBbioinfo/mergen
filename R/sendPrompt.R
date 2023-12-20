@@ -236,33 +236,42 @@ testPrompter<-function(agent,prompt, ...){
 # send chat prompt to a generic API that is similar to openai API
 genericChat<-function(agent, prompt,...){
 
-  if(is.list(prompt)){
+  args=list(...) # get ellipsis arguments, these must be for API
+  api_argnames<-c("model","temp","top_p","n","stream","max_tokens",
+                  "presence_penalty","frequency_penalty","logit_bias","user")
+  if(length(args)>0){
+    body=args[names(args) %in% api_argnames]
+  }else{
+    body=list()
+  }
+
+  if("messages" %in% api_argnames ){
+
+    body[["model"]]=agent$model
+    body[["messages"]]=args$messages
+
     response <- httr::POST(
       url =agent$url,
 
       httr::add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
       httr::content_type("application/json"),
       encode = "json",
-      body = list(
-        model = agent$model,
-        messages = list(
-          prompt
-        )
-      )
+      body = body
     )
   }else {
+
+    body[["model"]]=agent$model
+    body[["messages"]]=list(
+                            list(role = "user", content = prompt)
+                            )
     response <- httr::POST(
       url =agent$url,
 
       httr::add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
       httr::content_type("application/json"),
       encode = "json",
-      body = list(
-        model = agent$model,
-        messages = list(
-          list(role = "user", content = prompt)
-        )
-      )
+      body = body
+
     )
   }
 
