@@ -10,7 +10,7 @@ check_install(package_name)
 \item{package_name}{A character string specifying the name of the package to be checked and installed.}
 }
 \value{
-No value returned. Called for installation of package.
+TRUE if the package is already installed or can be installed. FALSE otherwise
 }
 \description{
 This function checks if an R package is installed, and if not, attempts to install

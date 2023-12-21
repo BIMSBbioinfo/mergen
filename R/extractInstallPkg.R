@@ -8,7 +8,7 @@
 #' @importFrom BiocManager install
 #' @importFrom BiocManager valid
 #' @importFrom utils install.packages
-#' @return  No value returned. Called for installation of package.
+#' @return  TRUE if the package is already installed or can be installed. FALSE otherwise
 #' @examples
 #' \donttest{
 #' # Check and install "dplyr" package
@@ -27,6 +27,7 @@ check_install<-function(package_name){
   # -----------------------------------------------------------------------------
 
   if (!require(package_name, character.only = TRUE)) {
+     message("\ntrying to install: ", package_name,"\n")
     if (!requireNamespace("BiocManager", quietly = TRUE)) {
       install.packages("BiocManager")
     }
@@ -40,6 +41,10 @@ check_install<-function(package_name){
       )
     }
   }
+
+  # returns true if the package is installed
+  require(package_name, character.only = TRUE)
+
 }
 
 #' extract package names and install them
@@ -48,7 +53,8 @@ check_install<-function(package_name){
 #' are needed to run the code returned by the agent
 #' and installs them as needed.
 #' @param code code block returned by the agent.
-#' @return  No value returned. Called for installation of package.
+#' @return  final status of the packages as a logical vector, TRUE if packages is already installed
+#' or could be installed. FALSE if the package can't be install.
 #' @examples
 #' \donttest{
 #' # Check code for packages that need installing
@@ -70,13 +76,43 @@ extractInstallPkg<-function(code){
   # Split the code into separate lines
   code_lines <- strsplit(code, "\n")[[1]]
 
-  # For each line look for library call and install things if not installed
-  for(a in 1:length(code_lines)){
 
-    if(grepl("(install|require)\\(", code_lines[a])){
-      new_code <- gsub("(install|require)\\((.*)\\)", "check_install('\\2')", code_lines[a])
-      message("trying to install ",new_code,"\n")
-      eval(str2expression(new_code)) # Execute install code
-    }
-  }
+  # Define a regex pattern to match 'library' or 'require' calls.
+  # It allows for optional spaces (\\s*) between the function name and the opening parenthesis,
+  # and captures the argument inside the parentheses.
+  pattern <- "(library|require)\\s*\\(([^)]+)\\)"
+
+  # Apply the regex pattern to each line.
+  # 'gregexpr' returns a list of match positions for each line.
+  matches <- regmatches(code_lines, gregexpr(pattern, code_lines))
+
+  # Process each line's matches.
+  package_names <- lapply(matches, function(match) {
+    # For each match, extract the package name.
+      sapply(match, function(m) {
+        # Extract the content within the parentheses.
+        # We use a regex with lookaheads and lookbehinds to capture this content.
+        pkg_name <- regmatches(m, regexpr("(?<=\\()[^)]+(?=\\))", m, perl = TRUE))
+        # trim white space
+        trimws(pkg_name)
+      })
+  })
+
+  # remove extra quotation marks and make the vecor
+  pkg_names <- unique(gsub('\"', '', unlist(package_names) ) )
+
+
+  ## ! old code refactored above
+  # For each line look for library call and install things if not installed
+  #for(a in 1:length(code_lines)){
+
+  #  if(grepl("(library|require)\\(", code_lines[a])){
+  #    new_code <- gsub("(library|require)\\((.*)\\)", "check_install('\\2')", code_lines[a])
+  #    message("trying to install ",new_code,"\n")
+  #    eval(str2expression(new_code)) # Execute install code
+  #  }
+  #}
+
+  # check and if doesn't exist, install packages
+  sapply(pkg_names,check_install)
 }

@@ -10,7 +10,8 @@ extractInstallPkg(code)
 \item{code}{code block returned by the agent.}
 }
 \value{
-No value returned. Called for installation of package.
+final status of the packages as a logical vector, TRUE if packages is already installed
+or could be installed. FALSE if the package can't be install.
 }
 \description{
 This function extracts all package names that

@@ -276,7 +276,7 @@ genericChat<-function(agent, prompt,...){
   }
 
   if(httr::status_code(response)>200) {
-    result <- trimws(httr::content(response)$error$message)
+    result <- trimws(httr::content(response))
   } else {
     result <- trimws(httr::content(response)$choices[[1]]$message$content)
   }
