@@ -33,6 +33,8 @@ clean_code_blocks<-function(response){
   response<-gsub("```bash", "```", response)
   response<-gsub("```\\{r\\}", "```", response)
   response<-gsub("```\\{R\\}", "```", response)
+  response<-gsub("```\\{(R|r),\\s*eval=(FALSE|TRUE)\\}", "```",response)
+
 
   # clean of possible output text
   response<-gsub("\n\\[[0-9]+\\].*\n","",response)
