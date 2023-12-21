@@ -5,3 +5,4 @@
   * new feature: clean_code_blocks() now automatically runs when extractCode() is called
   * fix: typos in setupAgent fixed
   * fix: sendPrompt fixed which was broken due to openai API changes
+  * fix: extractInstallPkg can now deal with require() calls in code blocks
