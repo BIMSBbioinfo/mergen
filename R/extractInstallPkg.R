@@ -73,11 +73,10 @@ extractInstallPkg<-function(code){
   # For each line look for library call and install things if not installed
   for(a in 1:length(code_lines)){
 
-    if(grepl("library\\(", code_lines[a])){
-      new_code <- gsub("library\\((.*)\\)", "check_install('\\1')", code_lines[a])
+    if(grepl("(install|require)\\(", code_lines[a])){
+      new_code <- gsub("(install|require)\\((.*)\\)", "check_install('\\2')", code_lines[a])
       message("trying to install ",new_code,"\n")
       eval(str2expression(new_code)) # Execute install code
-
     }
   }
 }
