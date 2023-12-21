@@ -73,7 +73,8 @@ and installs them as needed.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>No value returned. Called for installation of package.</p>
+<p>final status of the packages as a logical vector, TRUE if packages is already installed
+or could be installed. FALSE if the package can't be install.</p>
     </div>
 
     <div class="section level2">
@@ -82,6 +83,10 @@ and installs them as needed.</p>
 <span class="r-in"><span><span class="co"># Check code for packages that need installing</span></span></span>
 <span class="r-in"><span><span class="va">code</span> <span class="op">&lt;-</span> <span class="st">"library(devtools)\n x&lt;-5"</span></span></span>
 <span class="r-in"><span><span class="fu">extractInstallPkg</span><span class="op">(</span><span class="va">code</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: devtools</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: usethis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> devtools </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     TRUE </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
