@@ -9,9 +9,16 @@ rbionfoExp="Act as an expert bioformatician and R user. Answer questions using y
 #'
 #' @param agent An object containing the agent's information (e.g., type and model etc.).
 #' @param prompt The prompt text to send to the language model.
-#' @param context Optional context to provide alongside the prompt (default is rbionfoExp).
-#' @param return.type The type of output to return, either the text response ("text") or the entire response object ("object").
-#' @param ... Additional arguments to be passed to the prompt function.
+#' @param context Optional context to provide alongside the prompt (default is promptContext(type = "simple")).
+#' @param return.type The type of output to return, either the text response ("text") or
+#'                     the entire response object ("object").
+#' @param previous.msgs a list of lists for previous prompts and responses.
+#'                      Useful to add context of the previous messages for the API.
+#'                      this argument works with openai and generic models, but not with replicate API.
+#'                      Default: NULL
+#' @param ... Additional arguments to be passed to the LLM API. Such as maximum tokens, ("max_tokens"), to be returned.
+#'            Users can also also provide other arguments in openai API-like
+#'            arguments documented on [the official documentation](https://platform.openai.com/docs/api-reference/chat/create). Other APIs are also following similar argument naming patterns.
 #' @return The text response or the entire response object, based on the specified return type.
 #' @seealso \code{\link{promptContext}} for predefined contexts to use.
 #' @examples
@@ -19,15 +26,35 @@ rbionfoExp="Act as an expert bioformatician and R user. Answer questions using y
 #' agent <- setupAgent(name="openai",type="chat",model="gpt-4",
 #'                     ai_api_key=Sys.getenv("OPENAI_API_KEY"))
 #' prompt <- "tell me a joke"
-#' response <- sendPrompt(agent, prompt)
+#' response <- sendPrompt(agent, prompt,context="")
 #'
-#' response <- sendPrompt(agent,prompt,context=rbionfoExp,return.type="text", max_tokens = 500)
+#' # increase tokens, it is important for getting longer responses
+#' response <- sendPrompt(agent,prompt,context="",return.type="text", max_tokens = 500)
+#'
+#' # get previous messages into the context
+#' prompt="what about 2010?"
+#' response <- sendPrompt(agent,prompt,context="",
+#'                        return.type="text",
+#'                        previous.msgs=list(
+#'                                           list(
+#'                                                "role" = "user",
+#'                                                 "content" = "Who won the world
+#'                                                  series in 2020?"
+#'                                                  ),
+#'                                           list(
+#'                                                 "role" = "assistant",
+#'                                               "content" = "The Los Angeles Dodgers"
+#'                                               )
+#'                                           )
+#'                        )
+#'
+#'
 #' }
 #' @import openai
 #'
 #' @export
-sendPrompt<-function(agent,prompt,context=rbionfoExp,
-                     return.type=c("text","object"),...){
+sendPrompt<-function(agent,prompt,context=promptContext(type = "simple"),
+                     return.type=c("text","object"),previous.msgs=NULL,...){
 
   # Argument validation
   #-----------------------------------------------------------------------------
@@ -87,7 +114,8 @@ sendPrompt<-function(agent,prompt,context=rbionfoExp,
   final.prompt=paste(context,prompt,sep="\n")
 
 
-  res<-promptFunc(agent=agent, prompt=final.prompt, return.type=return.type, ...)
+  res<-promptFunc(agent=agent, prompt=final.prompt, return.type=return.type,
+                  previous.msgs=previous.msgs,...)
 
   return (res)
 }
@@ -139,13 +167,20 @@ testPrompter<-function(agent,prompt, ...){
 # hides specific stuff so that promptFunc works in a unified way
 # across agents
 #' @noRd
-.openai_chat<-function(agent,prompt,return.type,...){
+.openai_chat<-function(agent,prompt,return.type,previous.msgs,...){
   args <- list(...)
   # For working with self-correct function
   if ("messages" %in% names(args)){
     res <- openai::create_chat_completion(model=agent$model,
                                    messages=args$messages,
                                    openai_api_key = agent$ai_api_key)
+  }else if(!is.null(previous.msgs) & is.list(previous.msgs) ){
+
+    new.msgs=c(previous.msgs,list(list("role" = "user","content" = prompt)))
+    res <- openai::create_chat_completion(model=agent$model,
+                                          messages=new.msgs,
+                                          openai_api_key = agent$ai_api_key,
+                                          ...)
   }else{
     res <- openai::create_chat_completion(model=agent$model,
                                    messages=list(
@@ -156,6 +191,8 @@ testPrompter<-function(agent,prompt, ...){
                                    openai_api_key = agent$ai_api_key,
                                    ...)
   }
+
+
   if (return.type=="text"){
     return (res$choices[1,5])
   }else(
@@ -234,7 +271,7 @@ testPrompter<-function(agent,prompt, ...){
 }
 
 # send chat prompt to a generic API that is similar to openai API
-genericChat<-function(agent, prompt,...){
+genericChat<-function(agent, prompt,previous.msgs,...){
 
   args=list(...) # get ellipsis arguments, these must be for API
   api_argnames<-c("model","temp","top_p","n","stream","max_tokens",
@@ -244,37 +281,33 @@ genericChat<-function(agent, prompt,...){
   }else{
     body=list()
   }
+  body[["model"]]=agent$model
 
-  if("messages" %in% api_argnames ){
-
-    body[["model"]]=agent$model
+  if("messages" %in% names(args)  ){
     body[["messages"]]=args$messages
 
-    response <- httr::POST(
-      url =agent$url,
+  }else if(!is.null(previous.msgs) & is.list(previous.msgs) ){
 
-      httr::add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
-      httr::content_type("application/json"),
-      encode = "json",
-      body = body
-    )
+    new.msgs=c(previous.msgs,list(list("role" = "user","content" = prompt)))
+    body[["messages"]]=new.msgs
   }else {
-
-    body[["model"]]=agent$model
     body[["messages"]]=list(
                             list(role = "user", content = prompt)
                             )
-    response <- httr::POST(
-      url =agent$url,
-
-      httr::add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
-      httr::content_type("application/json"),
-      encode = "json",
-      body = body
-
-    )
   }
 
+  # get response
+  response <- httr::POST(
+    url =agent$url,
+
+    httr::add_headers(Authorization = paste("Bearer", agent$ai_api_key)),
+    httr::content_type("application/json"),
+    encode = "json",
+    body = body
+
+  )
+
+  # check if there is error
   if(httr::status_code(response)>200) {
     result <- trimws(httr::content(response))
   } else {

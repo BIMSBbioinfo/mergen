@@ -7,8 +7,9 @@
 sendPrompt(
   agent,
   prompt,
-  context = rbionfoExp,
+  context = promptContext(type = "simple"),
   return.type = c("text", "object"),
+  previous.msgs = NULL,
   ...
 )
 }
@@ -17,11 +18,19 @@ sendPrompt(
 
 \item{prompt}{The prompt text to send to the language model.}
 
-\item{context}{Optional context to provide alongside the prompt (default is rbionfoExp).}
+\item{context}{Optional context to provide alongside the prompt (default is promptContext(type = "simple")).}
 
-\item{return.type}{The type of output to return, either the text response ("text") or the entire response object ("object").}
+\item{return.type}{The type of output to return, either the text response ("text") or
+the entire response object ("object").}
 
-\item{...}{Additional arguments to be passed to the prompt function.}
+\item{previous.msgs}{a list of lists for previous prompts and responses.
+Useful to add context of the previous messages for the API.
+this argument works with openai and generic models, but not with replicate API.
+Default: NULL}
+
+\item{...}{Additional arguments to be passed to the LLM API. Such as maximum tokens, ("max_tokens"), to be returned.
+Users can also also provide other arguments in openai API-like
+arguments documented on [the official documentation](https://platform.openai.com/docs/api-reference/chat/create). Other APIs are also following similar argument naming patterns.}
 }
 \value{
 The text response or the entire response object, based on the specified return type.
@@ -34,9 +43,29 @@ Send a prompt to a specified language model agent and return the response.
 agent <- setupAgent(name="openai",type="chat",model="gpt-4",
                     ai_api_key=Sys.getenv("OPENAI_API_KEY"))
 prompt <- "tell me a joke"
-response <- sendPrompt(agent, prompt)
+response <- sendPrompt(agent, prompt,context="")
 
-response <- sendPrompt(agent,prompt,context=rbionfoExp,return.type="text", max_tokens = 500)
+# increase tokens, it is important for getting longer responses
+response <- sendPrompt(agent,prompt,context="",return.type="text", max_tokens = 500)
+
+# get previous messages into the context
+prompt="what about 2010?"
+response <- sendPrompt(agent,prompt,context="",
+                       return.type="text",
+                       previous.msgs=list(
+                                          list(
+                                               "role" = "user",
+                                                "content" = "Who won the world
+                                                 series in 2020?"
+                                                 ),
+                                          list(
+                                                "role" = "assistant",
+                                              "content" = "The Los Angeles Dodgers"
+                                              )
+                                          )
+                       )
+
+
 }
 }
 \seealso{
