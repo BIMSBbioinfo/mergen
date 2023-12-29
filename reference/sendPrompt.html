@@ -57,8 +57,9 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sendPrompt</span><span class="op">(</span></span>
 <span>  <span class="va">agent</span>,</span>
 <span>  <span class="va">prompt</span>,</span>
-<span>  context <span class="op">=</span> <span class="va">rbionfoExp</span>,</span>
+<span>  context <span class="op">=</span> <span class="fu"><a href="promptContext.html">promptContext</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span>,</span>
 <span>  return.type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"text"</span>, <span class="st">"object"</span><span class="op">)</span>,</span>
+<span>  previous.msgs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -74,15 +75,25 @@
 
 
 <dt>context</dt>
-<dd><p>Optional context to provide alongside the prompt (default is rbionfoExp).</p></dd>
+<dd><p>Optional context to provide alongside the prompt (default is promptContext(type = "simple")).</p></dd>
 
 
 <dt>return.type</dt>
-<dd><p>The type of output to return, either the text response ("text") or the entire response object ("object").</p></dd>
+<dd><p>The type of output to return, either the text response ("text") or
+the entire response object ("object").</p></dd>
+
+
+<dt>previous.msgs</dt>
+<dd><p>a list of lists for previous prompts and responses.
+Useful to add context of the previous messages for the API.
+this argument works with openai and generic models, but not with replicate API.
+Default: NULL</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Additional arguments to be passed to the prompt function.</p></dd>
+<dd><p>Additional arguments to be passed to the LLM API. Such as maximum tokens, ("max_tokens"), to be returned.
+Users can also also provide other arguments in openai API-like
+arguments documented on [the official documentation](https://platform.openai.com/docs/api-reference/chat/create). Other APIs are also following similar argument naming patterns.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -102,9 +113,29 @@
 <span class="r-in"><span><span class="va">agent</span> <span class="op">&lt;-</span> <span class="fu"><a href="setupAgent.html">setupAgent</a></span><span class="op">(</span>name<span class="op">=</span><span class="st">"openai"</span>,type<span class="op">=</span><span class="st">"chat"</span>,model<span class="op">=</span><span class="st">"gpt-4"</span>,</span></span>
 <span class="r-in"><span>                    ai_api_key<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"OPENAI_API_KEY"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">prompt</span> <span class="op">&lt;-</span> <span class="st">"tell me a joke"</span></span></span>
-<span class="r-in"><span><span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">sendPrompt</span><span class="op">(</span><span class="va">agent</span>, <span class="va">prompt</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">sendPrompt</span><span class="op">(</span><span class="va">agent</span>, <span class="va">prompt</span>,context<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">sendPrompt</span><span class="op">(</span><span class="va">agent</span>,<span class="va">prompt</span>,context<span class="op">=</span><span class="va">rbionfoExp</span>,return.type<span class="op">=</span><span class="st">"text"</span>, max_tokens <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># increase tokens, it is important for getting longer responses</span></span></span>
+<span class="r-in"><span><span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">sendPrompt</span><span class="op">(</span><span class="va">agent</span>,<span class="va">prompt</span>,context<span class="op">=</span><span class="st">""</span>,return.type<span class="op">=</span><span class="st">"text"</span>, max_tokens <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get previous messages into the context</span></span></span>
+<span class="r-in"><span><span class="va">prompt</span><span class="op">=</span><span class="st">"what about 2010?"</span></span></span>
+<span class="r-in"><span><span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">sendPrompt</span><span class="op">(</span><span class="va">agent</span>,<span class="va">prompt</span>,context<span class="op">=</span><span class="st">""</span>,</span></span>
+<span class="r-in"><span>                       return.type<span class="op">=</span><span class="st">"text"</span>,</span></span>
+<span class="r-in"><span>                       previous.msgs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>                                          <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>                                               <span class="st">"role"</span> <span class="op">=</span> <span class="st">"user"</span>,</span></span>
+<span class="r-in"><span>                                                <span class="st">"content"</span> <span class="op">=</span> <span class="st">"Who won the world</span></span></span>
+<span class="r-in"><span><span class="st">                                                 series in 2020?"</span></span></span>
+<span class="r-in"><span>                                                 <span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                          <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>                                                <span class="st">"role"</span> <span class="op">=</span> <span class="st">"assistant"</span>,</span></span>
+<span class="r-in"><span>                                              <span class="st">"content"</span> <span class="op">=</span> <span class="st">"The Los Angeles Dodgers"</span></span></span>
+<span class="r-in"><span>                                              <span class="op">)</span></span></span>
+<span class="r-in"><span>                                          <span class="op">)</span></span></span>
+<span class="r-in"><span>                       <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
