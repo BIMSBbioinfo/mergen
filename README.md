@@ -12,9 +12,9 @@ performance and accuracy. mergen features a user-friendly chat
 interface, enabling users to interact with the AI agent and extract
 valuable insights from their data effortlessly.
 
-The package website with full documentation is [here](http://bioinformatics.mdc-berlin.de/mergen)
+The package website with full documentation is [here](http://bioinformatics.mdc-berlin.de/mergen).
 
-If you want to use **mergen** in your Rstudio session via an embedded chatbot, try out our companion package [mergenstudio](https://github.com/BIMSBbioinfo/mergenstudio/)
+If you want to use **mergen** in your Rstudio session via an embedded chatbot, try out our companion package [mergenstudio](https://github.com/BIMSBbioinfo/mergenstudio/).
 
 ### Installation
 
