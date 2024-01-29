@@ -42,5 +42,6 @@ Collate:
     'fileHeaderPrompt.R'
     'test-helper-test_argument_validation.R'
     'promptContext.R'
-RoxygenNote: 7.2.3
+    'runCodeInResponse.R'
+RoxygenNote: 7.3.0
 Config/testthat/edition: 3
