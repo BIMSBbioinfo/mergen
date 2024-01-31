@@ -34,6 +34,8 @@ reference:
   contents:
   - sendPrompt
   - selfcorrect
+  - runCodeInResponse
+  - sampleResponse
 - title: "### Manipulate agent's answer"
   desc: >
     Functions for manipulating the agents answer so code can be extracted, executed, filenames can be extracted etc. Some of these functions are internally used by others.
