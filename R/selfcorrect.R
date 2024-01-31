@@ -70,7 +70,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
 
   attmpt.st=1 # attempt counter starting point
 
-  if(is.null(output.file)){output="eval"}
+  if(is.null(output.file)){output="eval"} # this doesn't do anything yet
 
   if(is.null(responseWithError)){
 
@@ -79,6 +79,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
     response <- sendPrompt(agent,prompt,context,return.type="text",...)
 
     # Clean the code backtick structure and install.packages calls
+    init.response <- response
     response<-clean_code_blocks(response)
 
     initial.response <- response
@@ -155,6 +156,8 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
     msgs<-append(msgs,list(list("role" = "user","content" = new.prompt)))
 
     # Clean the code backtick structure and install.packages calls
+    init.response <- response
+
     response<-clean_code_blocks(response)
 
     msgs<-append(msgs,list(list("role" = "assistant","content" = response)))
@@ -234,7 +237,7 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
 
 
   # Return the latest code, initial prompt, and everything else
-  return(list(init.response=initial.response,
+  return(list(init.response=init.response,
               init.blocks=initial.blocks,
               final.response=response,
               final.blocks=blocks,
@@ -325,6 +328,7 @@ sampleResponse<-function(agent,prompt,
     response <- sendPrompt(agent,prompt,context,return.type="text",...)
 
     # Clean the code backtick structure and install.packages calls
+    init.response <- response
     response<-clean_code_blocks(response)
 
     initial.response <- response
@@ -368,6 +372,8 @@ sampleResponse<-function(agent,prompt,
 
 
     # Clean the code backtick structure and install.packages calls
+    init.response <- response
+
     response<-clean_code_blocks(response)
 
     initial.response <- response
@@ -428,7 +434,7 @@ sampleResponse<-function(agent,prompt,
 
 
   # Return the latest code, initial prompt, and everything else
-  return(list(init.response=initial.response,
+  return(list(init.response=init.response,
               init.blocks=initial.blocks,
               final.response=response,
               final.blocks=blocks,

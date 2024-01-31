@@ -53,6 +53,7 @@ runCodeInResponse<-function(
 
 
   # Clean the code backtick structure and install.packages calls
+  initial.response<-response
   response<-clean_code_blocks(response)
 
 
@@ -69,9 +70,9 @@ runCodeInResponse<-function(
 
   }
 
-  first.res<-list(init.response=response,
+  first.res<-list(init.response=initial.response,
                   init.blocks=blocks,
-                  final.response=response,
+                  final.response=initial.response,
                   final.blocks=blocks,
                   code.works=!(is.list(res) & ("error" %in% names(res) )),
                   exec.result=res,
