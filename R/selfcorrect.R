@@ -26,7 +26,7 @@
 #' response <- selfcorrect(agent,prompt,context=rbionfoExp, max_tokens = 500)
 #' }
 #' @export
-selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NULL,responseWithError=NULL,...){
+selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NULL,responseWithError=NULL, history=NULL,...){
 
   #---------------------------------------------------------------------------
   # Validate arguments
@@ -76,7 +76,11 @@ selfcorrect<-function(agent,prompt,context=rbionfoExp,attempts=3,output.file=NUL
 
 
     # Send prompt
-    response <- sendPrompt(agent,prompt,context,return.type="text",...)
+    if (is.null(history)){
+      response <- sendPrompt(agent,prompt,context,return.type="text",...)
+    }else{
+      response <- sendPrompt(agent,prompt,context,return.type="text",previous.msgs=history)
+    }
 
     # Clean the code backtick structure and install.packages calls
     init.response <- response
