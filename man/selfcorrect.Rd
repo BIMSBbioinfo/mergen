@@ -11,6 +11,7 @@ selfcorrect(
   attempts = 3,
   output.file = NULL,
   responseWithError = NULL,
+  history = NULL,
   ...
 )
 }
@@ -25,7 +26,9 @@ selfcorrect(
 
 \item{output.file}{Optional output file created holding parsed code}
 
-\item{responseWithError}{a list of response and errors returned from executeCode().
+\item{responseWithError}{a list of response and errors returned from executeCode().}
+
+\item{history}{a list of previous response and prompts. Default is NULL and should be stayed as is for most use cases.
 First element is expected to be the response and the second element is the error list returned by executeCode().}
 
 \item{...}{Additional arguments to be passed to the \code{\link{sendPrompt}} function.}
