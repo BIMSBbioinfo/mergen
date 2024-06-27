@@ -39,7 +39,7 @@ pak::pak("BIMSBbioinfo/mergen")
 - Make an AI platform account. Choices are openai.com, neets.ai (at the time of writing free with some limits), replicate.com , perplexity.ai etc.
   In addition, you can locally run an LLM in server mode and you can interact with it via API. One example is [GPT4all](https://gpt4all.io/index.html). Some of these solutions are not tested but should work with mergen. 
 - [Create an OpenAI API
-  key](https://platform.openai.com/account/api-keys) to use with the
+  key](https://platform.openai.com/docs/api-reference/introduction) to use with the
   package
 - [Create a replicate API key](https://replicate.com/pricing)
 - Set up the API key in R

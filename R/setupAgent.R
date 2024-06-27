@@ -53,9 +53,9 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
 #' For replicate models examples are:\itemize{
 #'  \item llama-2-70b-chat ( as '02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3')
 #'  \item llama-2-13b-chat ( as 'f4e2de70d66816a838a89eeeb621910adffb0dd0baba3976c96980970978018d')}
-#'  For a full list of openAI models
-#'  \href{https://platform.openai.com/docs/models/overview/}{click here}. For a full list of Replicate models,
-#'  \href{https://replicate.com/collections/language-models/}{click here}.
+#'  For a full list of openAI models see
+#'  https://platform.openai.com/docs/models/overview/. For a full list of Replicate models,
+#'  see https://replicate.com/collections/language-models.
 #' @param url the url for the API in case the API "generic" is selected. (Default: NULL)
 #' @param ai_api_key personal API key for accessing LLM
 #' @return A list holding agent information.
