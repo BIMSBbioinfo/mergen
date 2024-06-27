@@ -71,7 +71,7 @@
 <h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h3>
 <p>mergen employs artificial intelligence to convert data analysis questions into executable code, explanations, and algorithms. The self-correction feature ensures the generated code is optimized for performance and accuracy. mergen features a user-friendly chat interface, enabling users to interact with the AI agent and extract valuable insights from their data effortlessly.</p>
-<p>The package website with full documentation is <a href="http://bioinformatics.mdc-berlin.de/mergen" class="external-link">here</a>.</p>
+<p>The package website with full documentation is <a href="http://bioinformatics.mdc-berlin.de/mergen/" class="external-link">here</a>.</p>
 <p>If you want to use <strong>mergen</strong> in your Rstudio session via an embedded chatbot, try out our companion package <a href="https://github.com/BIMSBbioinfo/mergenstudio/" class="external-link">mergenstudio</a>.</p>
 </div>
 <div class="section level3">
@@ -93,7 +93,7 @@
 <h3 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
 </h3>
 <ul>
-<li>Make an AI platform account. Choices are openai.com, neets.ai (at the time of writing free with some limits), replicate.com , perplexity.ai etc. In addition, you can locally run an LLM in server mode and you can interact with it via API. One example is <a href="https://gpt4all.io/" class="external-link">GPT4all</a>. Some of these solutions are not tested but should work with mergen.</li>
+<li>Make an AI platform account. Choices are openai.com, neets.ai (at the time of writing free with some limits), replicate.com , perplexity.ai etc. In addition, you can locally run an LLM in server mode and you can interact with it via API. One example is <a href="https://gpt4all.io/index.html" class="external-link">GPT4all</a>. Some of these solutions are not tested but should work with mergen.</li>
 <li>
 <a href="https://platform.openai.com/account/api-keys" class="external-link">Create an OpenAI API key</a> to use with the package</li>
 <li><a href="https://replicate.com/pricing" class="external-link">Create a replicate API key</a></li>
@@ -109,7 +109,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org" class="external-link">usethis</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">edit_r_environ</span><span class="op">(</span>scope<span class="op">=</span><span class="st">"project"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">edit_r_environ</a></span><span class="op">(</span>scope<span class="op">=</span><span class="st">"project"</span><span class="op">)</span></span></code></pre></div>
 <p>For a persistent loading of your API key, add the following line to your .Renviron file replacing <code>"your_key"</code> with your key.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">AI_API_KEY</span><span class="op">=</span><span class="st">"your_key"</span></span></code></pre></div>
