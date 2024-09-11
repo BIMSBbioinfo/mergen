@@ -100,8 +100,8 @@ setupAgent<-function(name=c("openai","replicate","generic"),
       if (is.null(model)){
         warning ("No model selected. Model will be set to gtp-3.5-turbo.")
         model = "gpt-3.5-turbo"
-      }else if(!model%in% chatModels){
-        stop(paste("Invalid model selected. Please choose one of the following models:\n ",chatModels))
+      }else if(!model %in% chatModels){
+        stop(paste("Invalid model selected. Please choose one of the following models:\n ",paste(chatModels,collapse=', ')))
       }
     }else if (type=="completion"){
       completionModels=strsplit("text-davinci-003, text-davinci-002, text-curie-001, text-babbage-001, text-ada-001",", ")[[1]]
@@ -171,6 +171,7 @@ getModels <- function (api_key){
 
 
   } else {
+    warning('Request for available models failed. Check your API-key.')
     usable_models<-strsplit("gpt-4, gpt-4-0314, gpt-4-32k, gpt-4-32k-0314, gpt-3.5-turbo, gpt-3.5-turbo-0301, gpt-4o-mini, gpt-4o",", ")[[1]]
     return (usable_models)
   }
