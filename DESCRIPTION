@@ -1,7 +1,7 @@
 Package: mergen
 Type: Package
 Title: AI-Driven Code Generation, Explanation and Execution for Data Analysis
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person("Altuna", "Akalin", , "aakalin@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0468-0117")),
