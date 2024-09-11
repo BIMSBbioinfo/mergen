@@ -10,6 +10,7 @@
 #' @param attempts Numeric value denoting how many times the code should be sent back for fixing.
 #' @param output.file Optional output file created holding parsed code
 #' @param responseWithError a list of response and errors returned from executeCode().
+#' @param history parameter to send history of the chat.
 #' First element is expected to be the response and the second element is the error list returned by executeCode().
 #' @param ... Additional arguments to be passed to the \code{\link{sendPrompt}} function.
 #' @return A list containing the following elements:

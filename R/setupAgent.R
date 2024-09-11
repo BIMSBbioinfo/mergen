@@ -17,7 +17,7 @@ setupopenaiAgent<-function(model,type=c("chat","completion"),
                            openai_api_key= Sys.getenv("OPENAI_API_KEY"),
                            openai_organization = NULL
                            ){
-  chatModels= strsplit("gpt-4, gpt-4-0314, gpt-4-32k, gpt-4-32k-0314, gpt-3.5-turbo, gpt-3.5-turbo-0301",", ")[[1]]
+  chatModels= getModels(openai_api_key)
   completionModels=strsplit("text-davinci-003, text-davinci-002, text-curie-001, text-babbage-001, text-ada-001",", ")[[1]]
 
   if(type=="chat" && (! model %in% chatModels) ){
@@ -95,7 +95,7 @@ setupAgent<-function(name=c("openai","replicate","generic"),
       type="chat"
     }
     if (type=="chat"){
-      chatModels= strsplit("gpt-4, gpt-4-0314, gpt-4-32k, gpt-4-32k-0314, gpt-3.5-turbo, gpt-3.5-turbo-0301",", ")[[1]]
+      chatModels= getModels(ai_api_key)
       base_url ="https://api.openai.com/v1/chat/completions"
       if (is.null(model)){
         warning ("No model selected. Model will be set to gtp-3.5-turbo.")
@@ -139,3 +139,40 @@ setupTestAgent<-function(agentName="testAgent"){
 
   return(list(name="testAgent",model="crap",type="completion"))
 }
+
+#' getting available openai models
+#' Returns a list of available models.
+#' @noRd
+#
+getModels <- function (api_key){
+  # Define the URL for the models endpoint
+  url <- "https://api.openai.com/v1/models"
+
+  # Make the GET request to fetch the list of models
+  response <- httr::GET(
+    url = url,
+    httr::add_headers(Authorization = paste("Bearer", api_key))
+  )
+
+  # Check if the request was successful
+  if (httr::status_code(response) == 200) {
+    usable_models <-c()
+    # Parse the response to extract the list of models
+    models <- httr::content(response, "text", encoding = "UTF-8")
+    models <- jsonlite::fromJSON(models)
+    # Get available models
+    for (i in 1:length(models$data$id)){
+      curr_mod <- models$data$id[i]
+      if (grepl("gpt",curr_mod) & (!grepl("personal",curr_mod)) & (!grepl('instruct',curr_mod))){
+        usable_models <- c(usable_models,curr_mod)
+      }
+    }
+    return (usable_models)
+
+
+  } else {
+    usable_models<-strsplit("gpt-4, gpt-4-0314, gpt-4-32k, gpt-4-32k-0314, gpt-3.5-turbo, gpt-3.5-turbo-0301, gpt-4o-mini, gpt-4o",", ")[[1]]
+    return (usable_models)
+  }
+}
+
