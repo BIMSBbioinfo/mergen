@@ -1,7 +1,6 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   mergen: mergen.html
-last_built: 2024-06-27T07:23Z
-
+last_built: 2024-09-11T10:16Z
